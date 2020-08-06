@@ -1,0 +1,4 @@
+#include <HotConsts/HotConsts.h>
+
+HC(int, reloadHandlesNewParams_newTestVal1) = 100; // name does not match registry
+HC(type2, reloadHandlesNewParams_testVal2) = 200; // type does not match registry

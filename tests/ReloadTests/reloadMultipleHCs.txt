@@ -1,0 +1,5 @@
+#include <HotConsts/HotConsts.h>
+
+HC(int, reloadMultipleHCs_testVal1) = 100;
+HC(int, reloadMultipleHCs_testVal2) = 200;
+HC(int, reloadMultipleHCs_testVal3) = 300;

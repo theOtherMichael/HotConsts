@@ -1,0 +1,24 @@
+#include <HotConsts/HostConsts.h>
+
+// Avoid identifying HC() if other valid characters precede "HC".
+// All of these might be valid tokens, if they're defined in the user's project, so we ignore these silently.
+aHC(int, reloadSkipsSymbolsContainingHC_testVal1) = 100;
+AHC(int, reloadSkipsSymbolsContainingHC_testVal2) = 200;
+0HC(int, reloadSkipsSymbolsContainingHC_testVal3) = 300;
+_HC(int, reloadSkipsSymbolsContainingHC_testVal4) = 400;
+
+// Avoid identifying HC if non-whitespace characters come between "HC" and "(".
+HCblah (int, reloadSkipsSymbolsContainingHC_testVal5) = 500;
+HC blah (int, reloadSkipsSymbolsContainingHC_testVal6) = 600;
+HC blah(int, reloadSkipsSymbolsContainingHC_testVal7) = 700;
+
+// Ensure that line breaks don't cause false positives.
+HCblah
+ (int, reloadSkipsSymbolsContainingHC_testVal8) = 800;
+HC 
+
+blah 
+(int, reloadSkipsSymbolsContainingHC_testVal9) = 900;
+HC
+ 
+ blah(int, reloadSkipsSymbolsContainingHC_testVal10) = 1000;

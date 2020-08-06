@@ -1,0 +1,9 @@
+#include <HotConsts/HotConsts.h>
+
+HC() = 100;
+HC( , testConst) = 100;
+HC(int) = 100;
+HC(int, ) = 100;
+
+HC(int, testConst = 100;
+HC(int, testConst, garbage) = 100;

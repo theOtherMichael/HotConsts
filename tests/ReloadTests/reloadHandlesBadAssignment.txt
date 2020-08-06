@@ -1,0 +1,9 @@
+#include <HotConsts/HotConsts.h>
+
+HC(int, reloadHandlesBadAssignment_testVal1) = 100  // Missing semicolon
+HC(int, reloadHandlesBadAssignment_testVal2) = 200; // This one's actually completely valid.  This is just here to test line 3.
+
+HC(int, reloadHandlesBadAssignment_testVal3) = ;    // Missing expression
+HC(int, reloadHandlesBadAssignment_testVal4) =;     // Empty expression
+HC(int, reloadHandlesBadAssignment_testVal5) 500;   // Missing '='
+HC(int, reloadHandlesBadAssignment_testVal6) == 600;   // "==" instead of '='

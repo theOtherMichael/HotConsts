@@ -1,0 +1,16 @@
+# Build Folders
+/bin/
+/bin-int/
+/tests/bin/
+/tests/bin-int/
+
+# Visual Studio Files
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+
+# Xcode files
+**.xcworkspace/
+**.xcodeproj/

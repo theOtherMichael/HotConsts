@@ -1,0 +1,3 @@
+#include <HotConsts/HotConsts.h>
+
+HC(int, reloadHandlesEOF_awaitingAssignmentOperator_testVal1) 

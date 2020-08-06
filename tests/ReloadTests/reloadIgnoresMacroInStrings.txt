@@ -1,0 +1,5 @@
+#include <HotConsts/HotConsts.h>
+
+std::string badstring;
+
+badstring = "The following shouldn't trigger the reload: HC(int, reloadIgnoresMacroInStrings_testVal1) = 0;";

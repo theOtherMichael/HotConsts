@@ -1,0 +1,6 @@
+#include <HotConsts/HotConsts.h>
+
+HC(int, reloadHandlesRedefinitions_testVal1) = 100;
+
+// The issue is with using "reloadHandlesRedefinitions_testVal1" twice in the same file.
+HC(int, reloadHandlesRedefinitions_testVal1) = 200;

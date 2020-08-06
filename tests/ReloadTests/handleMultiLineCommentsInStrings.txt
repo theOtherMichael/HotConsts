@@ -1,0 +1,6 @@
+#include <HotConsts/HotConsts.h>
+
+HC(std::string, testConst) = "/* This comment should be ignored, as it's part of a string literal. */"s;
+
+HC(const char*, testConst) = "/* This comment should be ignored, "
+    "as it's part of a multi-line string literal */";

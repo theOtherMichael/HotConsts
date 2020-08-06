@@ -1,0 +1,11 @@
+#include <HotConsts/HotConsts.h>
+
+/* HC(int, testConst) = 100; */
+
+/* HC(int, testConst) = 100;
+   HC(int, testConst) = 100;
+   HC(int, testConst) = 100; */
+
+/* HC(int, testConst) = 100;
+   HC(int, testConst) = 100;
+   HC(int, testConst) = 100; /**/
