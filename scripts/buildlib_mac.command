@@ -1,6 +1,6 @@
 #!/bin/bash
 cd "`dirname "$0"`"
-cd ".."
+cd "../tests"
 # Add user permission to execute premake
 chmod u+x scripts/premake/premake5
 # Invoke the premake build script

@@ -87,7 +87,7 @@ HotConsts::HC_Atomic<T>& _registerHotConst(const char* file, const char* name, c
 
 #ifdef HOTCONSTS_DEBUG
 #define HC(type, name) \
-const volatile HotConsts::HC_Atomic<type>& name = \
+const HotConsts::HC_Atomic<type>& name = \
 HotConsts::_registerHotConst<type>(__FILE__, #name, #type)
 #define HCEX(type, name) extern const HotConsts::HC_Atomic<type>& name
 #else
