@@ -45,11 +45,9 @@ In debug builds, the `HC()` macro does the following things:
 ### 1. Build the Library
 #### For Premake users
 
-Hot Constants uses [Premake](https://premake.github.io/) for its build system.  If your project uses Premake as well, you can include the library project in your solution/workspace by using Premake's [`include`](https://github.com/premake/premake-core/wiki/include) command on *pm_library.lua*, which is located in the root directory.
+Hot Constants uses [Premake](https://premake.github.io/) for its build system.  If your project uses Premake as well, you can include the library project in your solution/workspace by using Premake's [`include`](https://github.com/premake/premake-core/wiki/include) command on *pm_library.lua*, which is located in the root directory.  For an example of how to do this, check out the *premake5.lua* file in the [Enterprise Engine repository](https://github.com/theOtherMichael/Enterprise).
 
 Additionally, the *HotConsts* project uses the configurations *"Debug"* and *"Release"* for compiler optimizations and the platforms *"Static64"* and *"Static32"* to determine architecture.  You can use Premake's [`configmap`](https://github.com/premake/premake-core/wiki/configmap) command to map these to the configurations used in your solution/workspace.
-
-<!-- An example of how to set up a Premake script that includes Hot Constants is available in the Enterprise Engine project. -->
 
 #### For non-Premake users
 
