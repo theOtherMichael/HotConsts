@@ -1,7 +1,7 @@
 #include "HC_PCH.h"
-#include "HotConsts.h"
-
 #ifdef _WIN32
+
+#include "HotConsts.h"
 
 std::vector<std::wstring>& _watchedDirPaths()
 {
@@ -287,7 +287,7 @@ HC_FileWatchRegistry::~HC_FileWatchRegistry()
 }
 
 
-HC_FileWatchRegistry& HotConsts::_getWatchRegistry()
+HC_FileWatchRegistry& _getWatchRegistry()
 {
 	// As long as no object references HC_FileWatchRegistry in its destructor, this
 	// code should be safe.
