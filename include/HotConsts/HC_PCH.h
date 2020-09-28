@@ -17,3 +17,7 @@
 #ifdef _WIN32
 #include <Windows.h>
 #endif // _WIN32
+
+#if defined(__APPLE__) && defined(__MACH__)
+#include <CoreServices/CoreServices.h>
+#endif // macOS

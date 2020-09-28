@@ -22,7 +22,7 @@ include "../pm_library.lua"
 -- Test project.
 project "HotConsts_Tests"
     kind "ConsoleApp"
-    links "HotConsts"
+    links { "HotConsts", "CoreServices.framework" }
     language "C++"
     cppdialect "C++17"
 

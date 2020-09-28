@@ -225,6 +225,7 @@ bool HC_FileWatchRegistry::addWatch(std::string filepath)
 		else
 		{
 			// Register folder
+            // TODO: Confirm that this is thread-safe.
 			_watchedDirPaths().emplace_back(dirpath);
 			_openDirHandles().emplace_back(directoryHandle);
 			_watchedFilepathsPerDir().emplace_back();

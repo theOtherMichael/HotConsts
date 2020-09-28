@@ -9,7 +9,7 @@
 #ifdef _WIN32
 #define TESTFILEDIR "ReloadTests\\" 
 #else
-#define TESTFILEDIR "ReloadTests/" 
+#define TESTFILEDIR "ReloadTests/"
 #endif
 
 // RELOAD TESTS
@@ -443,9 +443,18 @@ bool fileChangeTriggersReload()
         srcFile << "#include <HotConsts/HotConsts.h>\n\nHC(int, fileChangeTriggersReload_testVal1) = 1;\n";
 		srcFile.close();
 
-        // Simulate a macro invocation from this file.
+        // Simulate a macro invocation from the test file.
+        // Hack: The path to the file in this test must be a full path to work correctly on macOS.
+        std::string thisDirectory;
+#ifdef _WIN32
+        thisDirectory = "ReloadTests\\fileChangeTriggersReload.txt";
+#else
+        std::string thisfile(__FILE__);
+        auto postSlashPos = thisfile.rfind("ReloadTests.cpp");
+        thisDirectory = thisfile.substr(0, postSlashPos) + "ReloadTests/fileChangeTriggersReload.txt";
+#endif
 		const HotConsts::HC_Atomic<int>& fileChangeTriggersReload_testVal1 =
-			HotConsts::_registerHotConst<int>(TESTFILEDIR "fileChangeTriggersReload.txt",
+			HotConsts::_registerHotConst<int>(thisDirectory.c_str(),
 											  "fileChangeTriggersReload_testVal1",
 											  "int") = 1;
         
@@ -456,7 +465,7 @@ bool fileChangeTriggersReload()
 			srcFile << "#include <HotConsts/HotConsts.h>\n\nHC(int, fileChangeTriggersReload_testVal1) = 100;\n";
 			srcFile.close();
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(std::chrono::milliseconds(200)); //macOS reload latency is set to 100ms
 
             // See if new value has been loaded.
             // Sleep is to ensure asynchronous calls have time to complete.

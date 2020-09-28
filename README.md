@@ -24,12 +24,11 @@ Hot Constants was developed with game development in mind.  The idea is that you
 ## Features
 
 * **Named constants.**  You can use hot constants anywhere you'd use normal constants.
-* **No refactoring.**  You can convert any named constant into a hot constant (and vice-versa) just by changing its declaration.
-* **Externs.**  The `HCEX()` macro allows you to declare `extern` hot constants.
+* **No refactoring required.**  You can convert any existing named constants into hot constants (and vice-versa) just by changing their declaration.
+* **Externs.**  The `HCEX()` macro allows you to declare `extern` hot constants.  These will also reload when you modify the definition in source code.
 * **Expression evaluation**.  If you assign an expression to a hot constant, it will automatically be evaluated correctly during a reload.
 * **Simple to implement.**  Just link to the library, define `HOTCONSTS_DEBUG` in your debug builds, and include  `HotConsts\HotConsts.h` where you need it.
-
-Currently, the reload mechanism has been implemented for Windows only.  macOS support is coming soon.
+* **Mac and Windows support.**  Visual Studio and Xcode workspaces are available out-of-the-box.
 
 ## How Do It Do?
 
@@ -63,14 +62,17 @@ Add the *include* folder to your project's include paths.
 
 To use the reload mechanism, you'll need to define `HOTCONSTS_DEBUG` in any configurations where you want your code to be reloadable.  This isn't necessarily the same thing as your debug build: for example, in Enterprise Engine, `HOTCONSTS_DEBUG` is defined in both the *Debug* and *Release* builds (but not *Dist* builds), so that values can be tweaked even in optimized code.
 
-### 4. Include `HotConsts.h` and Start Using it!
+### 4. (*macOS*) Link to the Core Services Framework
+
+If you're developing on macOS, you will need to manually link to `CoreServices.framework` in your executable project.  If you're develping on Windows with Visual Studio, everything is automatically linked for you.
+
+### 5. Include `HotConsts.h` and Start Using it!
 
 Wherever you use Hot Constants, include `HotConsts/HotConsts.h`.  You can then use `HC(type, name)` to declare a constant, and `HCEX(type, name)` to declare an `extern` one.
 
 Hot Constants uses `std::cout` to output debug messages, which can be helpful if your constants aren't reloading as expected.  To see them, ensure that you can see the output of the standard C output stream in your application.
 
 ## To-Do
-* macOS reload mechanism
 * Full support for `char` literals
 * Support for string constants
 * Use of true atomics (non-locking) for viable types
