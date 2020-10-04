@@ -1,0 +1,12 @@
+#include <HotConsts/HotConsts.h>
+
+HC
+(
+    unsigned
+    int
+    ,
+    reloadSingleHCWithTypeModifierAndLineBreaks_testVal
+)
+    =
+    100
+    ;

@@ -167,6 +167,16 @@ bool reloadSimpleHC()
     else
         return false;
 }
+bool reloadSingleHCWithTypeModifier()
+{
+    const HotConsts::HC_Atomic<unsigned int>& reloadSingleHCWithTypeModifier_testVal = HotConsts::_registerHotConst<unsigned int>(
+        TESTFILEDIR "reloadSingleHCWithTypeModifier.txt", "reloadSingleHCWithTypeModifier_testVal", "unsigned int") = 1;
+    HotConsts::_reloadSrcFile(TESTFILEDIR "reloadSingleHCWithTypeModifier.txt");
+    if (reloadSingleHCWithTypeModifier_testVal == 100)
+        return true;
+    else
+        return false;
+}
 bool reloadSingleHCWithLineBreaks()
 {
 	const HotConsts::HC_Atomic<int>& reloadSingleHCWithLineBreaks_testVal = 
@@ -174,6 +184,17 @@ bool reloadSingleHCWithLineBreaks()
                                           "reloadSingleHCWithLineBreaks_testVal", "int") = 1;
 	HotConsts::_reloadSrcFile(TESTFILEDIR "reloadSingleHCWithLineBreaks.txt");
 	if (reloadSingleHCWithLineBreaks_testVal == 100)
+		return true;
+	else
+		return false;
+}
+bool reloadSingleHCWithTypeModifierAndLineBreaks()
+{
+	const HotConsts::HC_Atomic<int>& reloadSingleHCWithTypeModifierAndLineBreaks_testVal =
+        HotConsts::_registerHotConst<int>(TESTFILEDIR "reloadSingleHCWithTypeModifierAndLineBreaks.txt", 
+                                          "reloadSingleHCWithTypeModifierAndLineBreaks_testVal", "unsigned int") = 1;
+	HotConsts::_reloadSrcFile(TESTFILEDIR "reloadSingleHCWithTypeModifierAndLineBreaks.txt");
+	if (reloadSingleHCWithTypeModifierAndLineBreaks_testVal == 100)
 		return true;
 	else
 		return false;

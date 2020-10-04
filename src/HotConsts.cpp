@@ -120,7 +120,6 @@ enum class parserState
     awaitingMacro,
     awaitingLParentheses,
     awaitingParam1,
-    awaitingComma,
     awaitingParam2,
     awaitingRParentheses,
     awaitingAssignmentOperator,
@@ -139,6 +138,9 @@ void _reloadSrcFile(const std::string& filename)
             std::string srcLine, carryover, HCTypeStr, HCNameStr;
             int lineNumber = 0, macroLine;
             bool inMultilineComment = false; // tracks whether line start is within /**/ block.
+            bool isNonModifierIdentified = false; // used when parsing first parameter of HC macro.
+            std::string_view term; // also used when parsing the first parameter of the HC macro.
+
             size_t searchPos1, searchPos2;
 
             // reload function stuff
@@ -219,7 +221,7 @@ void _reloadSrcFile(const std::string& filename)
                         if (searchPos2 != std::string::npos)
                         {
                             // Check that there's only whitespace between "HC" and "(".
-                            if (srcLine.find_first_not_of(" \r", searchPos1) < searchPos2)
+                            if (srcLine.find_first_not_of(" \t", searchPos1) < searchPos2)
                                 currentState = parserState::awaitingMacro;
                             else
                             {
@@ -230,79 +232,92 @@ void _reloadSrcFile(const std::string& filename)
                         else
                         {
                             // If the rest of the line isn't whitespace, this can't be an "HC" macro.
-                            if (srcLine.find_first_not_of(" \r", searchPos1) != std::string::npos)
+                            if (srcLine.find_first_not_of(" \t", searchPos1) != std::string::npos)
                                 currentState = parserState::awaitingMacro;
 
                             stillParsingLine = false;
                         }
                         break;
 
-                    case parserState::awaitingParam1:
-                        // Position 1 starts as the first character after "(".
+					case parserState::awaitingParam1:
+						// Position 1 starts as the first character after "(".
 
-                        // Whatever's next on the line is assumed to be a parameter.
-                        searchPos1 = srcLine.find_first_not_of(" \r", searchPos1);
-                        if (searchPos1 != std::string::npos)
-                        {
-                            searchPos2 = srcLine.find_first_of(",); \r", searchPos1);
-                            if (searchPos2 != std::string::npos)
-                                HCTypeStr = srcLine.substr(searchPos1, searchPos2 - searchPos1);
-                            else
-                                HCTypeStr = srcLine.substr(searchPos1);
+						searchPos1 = srcLine.find_first_not_of(" \t", searchPos1);
+						if (searchPos1 != std::string::npos)
+						{
+							if (srcLine.at(searchPos1) == ',')
+							{
+								// This is the comma following the parameter.  Strip the last space from HCTypeStr, then move on if it's valid.
+								if (HCTypeStr.empty())
+								{
+									std::cout << "Hot Constants:  Reload Failure: Macro invocation is missing its first parameter."
+										"\n                File: " << filename << ", Line: " << macroLine << std::endl;
+                                    isNonModifierIdentified = false;
+									currentState = parserState::awaitingMacro;
+								}
+								else
+								{
+									HCTypeStr.resize(HCTypeStr.size() - 1); //strip the trailing space
+									searchPos1++; //move past the comma
+                                    isNonModifierIdentified = false;
+									currentState = parserState::awaitingParam2;
+								}
+							}
+							else
+							{
+								// This might be a type.
+								searchPos2 = srcLine.find_first_of(", \t", searchPos1);
+								if (searchPos2 != std::string::npos)
+								{
+									term = std::string_view(srcLine.c_str() + searchPos1, searchPos2 - searchPos1);
+								}
+								else
+								{
+									term = std::string_view(srcLine.c_str() + searchPos1);
+									stillParsingLine = false;
+								}
 
-                            if (HCTypeStr.empty())
-                            {
-                                std::cout << "Hot Constants:  Reload Failure: Macro invocation is missing its first parameter."
-                                    "\n                File: " << filename << ", Line: " << macroLine << std::endl;
-                                currentState = parserState::awaitingMacro;
-                            }
-                            else
-                            {
-                                currentState = parserState::awaitingComma;
-                                searchPos1 = searchPos2;
-                            }
-                        }
-                        else
-                        {
-                            // Parameter must be on next line.
-                            stillParsingLine = false;
-                        }
-                        break;
-
-                    case parserState::awaitingComma:
-                        // Position 1 should be the first thing after parameter 1.
-
-                        searchPos2 = srcLine.find(',', searchPos1);
-                        if (searchPos2 > srcLine.find_first_not_of(" \r", searchPos1))
-                        {
-                            std::cout << "Hot Constants:  Reload Failure: \',\' not found after first parameter of macro invocation."
-                                "\n                File: " << filename << ", Line: " << macroLine << std::endl;
-                            currentState = parserState::awaitingMacro;
-                        }
-                        else
-                        {
-                            // If nothing is on the line at all, we continue looking for the comma on the next line.
-                            if (searchPos2 == std::string::npos)
-                            {
-                                searchPos1 = 0;
-                                stillParsingLine = false;
-                            }
-                            else
-                            {
-                                currentState = parserState::awaitingParam2;
-                                searchPos1 = searchPos2 + 1; //move past the comma.
-                            }
-                        }
-                        break;
+								// If this is a modifier, append it to HCTypeStr.  Else, we append only if it's the first typename.
+								if (term == "signed" || term == "unsigned" || term == "short" || term == "long")
+								{
+									HCTypeStr.append(term);
+									HCTypeStr.append(" ");
+                                    searchPos1 = searchPos2;
+								}
+								else
+								{
+									if (isNonModifierIdentified)
+									{
+										std::cout << "Hot Constants:  Reload Failure: Invalid first parameter in macro invocation."
+											"\n                File: " << filename << ", Line: " << macroLine << std::endl;
+										HCTypeStr.clear();
+										currentState = parserState::awaitingMacro;
+									}
+									else
+									{
+										isNonModifierIdentified = true;
+										HCTypeStr.append(term);
+										HCTypeStr.append(" ");
+                                        searchPos1 = searchPos2;
+									}
+								}
+							}
+						}
+						else
+						{
+							// We've encountered a blank line after "(": continue with the next one.
+							stillParsingLine = false;
+						}
+						break;
 
                     case parserState::awaitingParam2:
                         // Position 1 starts as the first character after ",".
 
                         // Whatever's next on the line is assumed to be a parameter.
-                        searchPos1 = srcLine.find_first_not_of(" \r", searchPos1);
+                        searchPos1 = srcLine.find_first_not_of(" \t", searchPos1);
                         if (searchPos1 != std::string::npos)
                         {
-                            searchPos2 = srcLine.find_first_of("); \r", searchPos1);
+                            searchPos2 = srcLine.find_first_of("); \t", searchPos1);
                             if (searchPos2 != std::string::npos)
                                 HCNameStr = srcLine.substr(searchPos1, searchPos2 - searchPos1);
                             else
@@ -312,6 +327,7 @@ void _reloadSrcFile(const std::string& filename)
                             {
                                 std::cout << "Hot Constants:  Reload Failure: Macro invocation is missing its second parameter."
                                     "\n                File: " << filename << ", Line: " << macroLine << std::endl;
+                                HCTypeStr.clear();
                                 currentState = parserState::awaitingMacro;
                             }
                             else
@@ -331,11 +347,12 @@ void _reloadSrcFile(const std::string& filename)
                         // Position 1 should be the first thing after parameter 2.
 
                         searchPos2 = srcLine.find(')', searchPos1);
-                        if (searchPos2 > srcLine.find_first_not_of(" \r", searchPos1))
+                        if (searchPos2 > srcLine.find_first_not_of(" \t", searchPos1))
                         {
                             // The first thing on this line isn't ")".
                             std::cout << "Hot Constants:  Reload Failure: \')\' not found after second parameter of macro invocation."
                                 "\n                File: " << filename << ", Line: " << macroLine << std::endl;
+                            HCTypeStr.clear();
                             currentState = parserState::awaitingMacro;
                         }
                         else
@@ -360,6 +377,7 @@ void _reloadSrcFile(const std::string& filename)
                                     std::cout << "Hot Constants:  Warning: Encountered unregistered value \"" << HCNameStr << "\" in source.  "
                                         "The application will not reflect new or renamed values until it is recompiled.  "
                                         "\n                File: " << filename << ", Line: " << macroLine << std::endl;
+                                    HCTypeStr.clear();
                                     currentState = parserState::awaitingMacro;
                                 }
 
@@ -372,11 +390,12 @@ void _reloadSrcFile(const std::string& filename)
                         // Position 1 should be the first thing after ')'.
 
                         searchPos2 = srcLine.find('=', searchPos1);
-                        if (searchPos2 != srcLine.find_first_not_of(" \r", searchPos1))
+                        if (searchPos2 != srcLine.find_first_not_of(" \t", searchPos1))
                         {
                             // the first thing on this line isn't a '=', so we've got an HC() missing an assignment.
                             std::cout << "Hot Constants:  Reload Failure: \'=\' not found after macro invocation.\n                "
                                 "Value: " << HCNameStr << ", File: " << filename << "Line: " << macroLine << std::endl;
+                            HCTypeStr.clear();
                             currentState = parserState::awaitingMacro;
                         }
                         else
@@ -396,6 +415,7 @@ void _reloadSrcFile(const std::string& filename)
                                         std::cout << "Hot Constants:  Reload Failure: \"==\" encountered after macro invocation.  "
                                             "Did you mean to use \'=\'?\n                Value: \"" << HCNameStr << "\", File: " << filename
                                             << ", Line: " << macroLine << std::endl;
+                                        HCTypeStr.clear();
                                         currentState = parserState::awaitingMacro;
                                         searchPos1 = searchPos2 + 2; //move past the "==".
                                     }
@@ -453,6 +473,7 @@ void _reloadSrcFile(const std::string& filename)
                                     "Value: \"" << HCNameStr << "\", File: " << filename << ", Line: " << macroLine << std::endl;
                             }
                             carryover.clear();
+                            HCTypeStr.clear();
                             currentState = parserState::awaitingMacro;
                             searchPos1 = searchPos2 + 1; // move past ';'.
                         }

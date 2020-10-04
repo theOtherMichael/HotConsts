@@ -158,7 +158,9 @@ bool handleMultiLineCommentsInStrings();
 
 // Source code reload
 bool reloadSimpleHC();
+bool reloadSingleHCWithTypeModifier();
 bool reloadSingleHCWithLineBreaks();
+bool reloadSingleHCWithTypeModifierAndLineBreaks();
 bool reloadMultipleHCs();
 bool reloadMutipleHCsSingleLine();
 bool reloadIgnoresMacroInStrings();

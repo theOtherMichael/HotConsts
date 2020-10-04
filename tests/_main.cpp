@@ -188,7 +188,9 @@ int main()
 
     TESTHEADER("Source code reload");
     TEST(reloadSimpleHC);
+    TEST(reloadSingleHCWithTypeModifier);
     TEST(reloadSingleHCWithLineBreaks);
+    TEST(reloadSingleHCWithTypeModifierAndLineBreaks);
     TEST(reloadMultipleHCs);
     TEST(reloadMutipleHCsSingleLine);
     TEST(reloadIgnoresMacroInStrings);
