@@ -441,8 +441,6 @@ void _reloadSrcFile(const std::string& filename)
                         searchPos2 = srcLine.find(';', searchPos1);
                         if (searchPos2 != std::string::npos)
                         {
-                            // TODO: Catch missing ";" here as soon as a non-expression token is identified.
-
                             carryover += srcLine.substr(searchPos1, searchPos2 - searchPos1);
 
                             // Warn if type differs
