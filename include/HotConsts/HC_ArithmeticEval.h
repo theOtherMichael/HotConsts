@@ -367,7 +367,7 @@ std::pair<bool, T_Out> _evaluateUnaryOp(T_In operand, unaryOperationType op)
 
 // Evaluate a unary operation (integral operand).
 template <typename T_In, typename T_Out = typename std::common_type<T_In>::type,
-typename std::enable_if<std::is_integral<T_In>::value, T_Out>::type* = nullptr>
+typename std::enable_if<std::is_integral<T_In>::value && !std::is_same<T_In, bool>::value, T_Out>::type* = nullptr>
 std::pair<bool, T_Out> _evaluateUnaryOp(T_In operand, unaryOperationType op)
 {
     std::pair<bool, T_Out> returnVal;
@@ -386,6 +386,40 @@ std::pair<bool, T_Out> _evaluateUnaryOp(T_In operand, unaryOperationType op)
             break;
         case unaryOperationType::bitwise_NOT:
             returnVal.second = ~operand;
+            break;
+        default:
+            std::cout << "Hot Constants:  Unhandled unary operation attempted!  "
+                "operationType: " << size_t(op) << std::endl;
+            returnVal.first = false;
+            returnVal.second = operand;
+            break;
+    }
+    
+    return returnVal;
+}
+
+
+// Evaluate a unary operation (boolean operand).
+template <typename T_In, typename T_Out = typename std::common_type<T_In>::type,
+typename std::enable_if<std::is_integral<T_In>::value && std::is_same<T_In, bool>::value, T_Out>::type* = nullptr>
+std::pair<bool, T_Out> _evaluateUnaryOp(T_In operand, unaryOperationType op)
+{
+    std::pair<bool, T_Out> returnVal;
+    returnVal.first = true;
+    returnVal.second = T_Out{};
+    
+    switch (op) {
+        case unaryOperationType::unary_plus:
+            returnVal.second = +operand;
+            break;
+        case unaryOperationType::unary_minus:
+            returnVal.second = -operand;
+            break;
+        case unaryOperationType::logical_NOT:
+            returnVal.second = !operand;
+            break;
+        case unaryOperationType::bitwise_NOT:
+            returnVal.second = true; // Bitwise negation of bool always evaluates to 'true'.
             break;
         default:
             std::cout << "Hot Constants:  Unhandled unary operation attempted!  "
@@ -708,7 +742,7 @@ std::pair<bool, T> _evalArithmeticExpression(std::string& strExpr)
 			while (prevOperator != &root)
 			{
 				prevOperator = prevOperator->parent;
-				if (currentLeaf = _evalAndPopETOperator(currentOperator))
+                if ((currentLeaf = _evalAndPopETOperator(currentOperator)))
 				{
 					// Apply any applicable unary operators to this result (operators placed on parentheses).
 					while (!unaryBuffer.empty())

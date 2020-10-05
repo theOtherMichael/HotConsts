@@ -160,7 +160,7 @@ bool separateParenthesesGroupsWithComplexUnaryOps()
 bool ultraExpressionEval()
 {
 	auto evaluatedExpression = +(!(1.5 > 2.5 < 3.5f >= 4.5f <= 5.5l == 6.5l != 7.5 && false || !true))
-		+ -(~(1 << 2 >> 3u & 4u ^ 5l | 6l) - +-(+3ul * -4ul) / ~5ull % ~- 6ull);
+    + -(~(((1 << 2 >> 3u & 4u) ^ 5l) | 6l) - +-(+3ul * -4ul) / ~5ull % ~- 6ull);
 	return expressionTest("+(!(1.5 > 2.5 < 3.5f >= 4.5f <= 5.5l == 6.5l != 7.5 && false || !true)) "
 		"+ -(~(1 << 2 >> 3u & 4u ^ 5l | 6l) - +-(+3ul * -4ul) / ~5ull % ~- 6ull)", evaluatedExpression);
 }
@@ -225,6 +225,7 @@ bool missingFinalLiteral()
 }
 bool badFinalExpressionConversion()
 {
+    // We're testing that the conversion from the type resulting from the expression doesn't result in a conversion error.
     return false;
 }
 
