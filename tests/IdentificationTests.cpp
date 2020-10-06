@@ -16,7 +16,7 @@ bool identifyIntLiterals()
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
-					<< "was identified incorrectly." << WHITE << std::endl;
+					<< " was identified incorrectly." << WHITE << std::endl;
 				returnVal = false;
 			}
 			++identityIt;
@@ -45,7 +45,7 @@ bool identifyLongLiterals()
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
-					<< "was identified incorrectly." << WHITE << std::endl;
+					<< " was identified incorrectly." << WHITE << std::endl;
 				returnVal = false;
 			}
 			++identityIt;
@@ -74,7 +74,7 @@ bool identifyLongLongLiterals()
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
-					<< "was identified incorrectly." << WHITE << std::endl;
+					<< " was identified incorrectly." << WHITE << std::endl;
 				returnVal = false;
 			}
 			++identityIt;
@@ -103,7 +103,7 @@ bool identifyUIntLiterals()
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
-					<< "was identified incorrectly." << WHITE << std::endl;
+					<< " was identified incorrectly." << WHITE << std::endl;
 				returnVal = false;
 			}
 			++identityIt;
@@ -132,7 +132,7 @@ bool identifyULongLiterals()
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
-					<< "was identified incorrectly." << WHITE << std::endl;
+					<< " was identified incorrectly." << WHITE << std::endl;
 				returnVal = false;
 			}
 			++identityIt;
@@ -161,7 +161,7 @@ bool identifyULongLongLiterals()
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
-					<< "was identified incorrectly." << WHITE << std::endl;
+					<< " was identified incorrectly." << WHITE << std::endl;
 				returnVal = false;
 			}
 			++identityIt;
