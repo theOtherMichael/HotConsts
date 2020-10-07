@@ -37,13 +37,11 @@ char				_convertLiteralTo_char(std::string& token);
 char16_t			_convertLiteralTo_char16(std::string& token);
 char32_t			_convertLiteralTo_char32(std::string& token);
 wchar_t			    _convertLiteralTo_wchar(std::string& token);
+int					_convertLiteralTo_multichar(std::string& token);
 
 // Bool conversion
 
 bool				_convertLiteralTo_bool(std::string& token);
-
-// String conversions
-// TODO: declare string conversion functions
 
 
 }

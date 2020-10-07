@@ -457,7 +457,7 @@ wchar_t _convertLiteralTo_wchar(std::string& token)
     return '0';
 }
 
-int convertLiteralTo_multichar(std::string& token)
+int _convertLiteralTo_multichar(std::string& token)
 {
     return '0';
 }
@@ -474,8 +474,5 @@ bool _convertLiteralTo_bool(std::string& token)
         throw std::invalid_argument("Hot Constants:  _convertLiteralTo_bool() was called with an invalid token.");
 }
 
-
-// String conversions
-// TODO: define string conversion functions
 
 }

@@ -28,16 +28,7 @@ std::deque<HC_Atomic<T>>& _getHCDequeOfType()
 template <typename T> 
 bool _reloadHotConst(std::string& stringExpr, size_t hcTypedDequeIndex)
 {
-    std::pair<bool, T> evalResult;
-
-    if (std::is_arithmetic<T>::value) // float, int, bool, char.
-        evalResult = _evalArithmeticExpression<T>(stringExpr);
-    else // strings
-    {
-//        evalResult = nonArithmeticEval(stringExpr); // strings
-        std::cout << "Hot Constants:  String constant reloading is not yet supported." << std::endl;
-        evalResult.first = false;
-    }
+    std::pair<bool, T> evalResult = _evalArithmeticExpression<T>(stringExpr);
 
     if (evalResult.first)
     {
@@ -69,7 +60,7 @@ void _reloadSrcFile(const std::string& expr);
 
 
 // Instantiate and register a hot constant with the reload mechanism.
-template <typename T>
+template <typename T, typename std::enable_if<std::is_arithmetic<T>::value, T>::type* = nullptr>
 HotConsts::HC_Atomic<T>& _registerHotConst(const char* file, const char* name, const char* type)
 {
     _getHCDequeOfType<T>().emplace_back();

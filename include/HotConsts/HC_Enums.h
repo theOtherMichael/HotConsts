@@ -49,24 +49,6 @@ struct literalTypeMap
 
 
 
-// TODO: Add support for strings
-//enum class stringLiteralTypes
-//{
-//    lit_string,
-//    //lit_string8, //c++20
-//    lit_string16,
-//    lit_string32,
-//    lit_wstring,
-//
-//    lit_stdstring,
-//    //lit_stdstring8, //c++20
-//    lit_stdstring16,
-//    lit_stdstring32,
-//    lit_stdwstring
-//};
-
-
-
 // Enumeration representing an arithmetic operation type.
 enum class operationType
 {

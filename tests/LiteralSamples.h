@@ -60,6 +60,3 @@ extern std::vector<std::pair<HotConsts::literalType, HotConsts::literalBase>> ch
 // Operators
 extern std::vector<std::string> operatorTokens;
 extern std::vector<HotConsts::operationType> operatorIdentities;
-
-// String literals
-extern std::vector<std::string> stringLiterals;

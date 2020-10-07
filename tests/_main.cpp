@@ -64,7 +64,6 @@ int main()
 	TESTHEADER("Other Literal Identification");
 	TEST(identifyBoolLiterals);
 	TEST(identifyCharLiterals);
-	//TEST(identifyStringLiterals);
 	TEST(identifyOperators);
 	TEST(identifyUnaryOperators);
 

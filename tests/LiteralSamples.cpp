@@ -1739,33 +1739,3 @@ std::vector<operationType> operatorIdentities
 
 	operationType::logical_OR
 };
-
-
-std::vector<std::string> stringLiterals
-{
-	// Strings
-	"\"This is a string.\"",
-	"u8\"This is a UTF-8 string.\"",
-	"u\"This is a UTF-16 string.\"",
-	"U\"This is a UTF-32 string.\"",
-	"L\"This is a wide string.\"",
-
-	// Raw strings
-	"R\"(This is\\na test\\nraw string\\n)\"",
-	"R\"abcd-12&34!#-_[}(This is\\na test\\nraw string\\n)abcd-12&34!#-_[}\"",
-	"u8R\"(This is\\na test\\nraw UTF-8 string\\n)\"",
-	"u8R\"abcd-12&34!#-_[}(This is\\na test\\nraw UTF-8 string\\n)abcd-12&34!#-_[}\"",
-	"uR\"(This is\\na test\\nraw UTF-16 string\\n)\"",
-	"uR\"abcd-12&34!#-_[}(This is\\na test\\nraw UTF-16 string\\n)abcd-12&34!#-_[}\"",
-	"UR\"(This is\\na test\\nraw UTF-32 string\\n)\"",
-	"UR\"abcd-12&34!#-_[}(This is\\na test\\nraw UTF-32 string\\n)abcd-12&34!#-_[}\"",
-	"LR\"(This is\\na test\\nraw wide string\\n)\"",
-	"LR\"abcd-12&34!#-_[}(This is\\na test\\nraw wide string\\n)abcd-12&34!#-_[}\"",
-
-	// STD strings
-	"\"This is a test std::string.\"s",
-	"u8\"This is a test std::u8string.\"s",
-	"u\"This is a test std::u16string.\"s",
-	"U\"This is a test std::u32string.\"s",
-	"L\"This is a test std::wstring.\"s"
-};

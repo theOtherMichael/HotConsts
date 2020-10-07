@@ -207,8 +207,6 @@ std::pair<bool, T_Out> _evaluateOp(T_Left left, T_Right right, operationType op)
     std::pair<bool, T_Out> returnVal;
     returnVal.first = true;
 
-    // TODO: Check here that both operands are arithmetic.  If they are not, report failure and type names.
-
     // One of the operands is not integral.
     // Omit integral-only operations.
     switch (op)
