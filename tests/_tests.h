@@ -144,7 +144,7 @@ bool unexpectedCloseParentheses();
 bool unexpectedNonLiteral();
 bool unexpectedNonOperator();
 bool missingFinalLiteral();
-bool badFinalExpressionConversion();
+bool narrowingFinalConversion();
 
 // Memory leaks
 bool noMemoryLeaks();

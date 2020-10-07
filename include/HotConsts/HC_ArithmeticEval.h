@@ -72,56 +72,122 @@ T _castETLeaf(ETNode* leaf)
     T returnVal{};
     
     switch (leaf->litType)
-    {
-        case literalType::lit_int:
-            returnVal = dynamic_cast<ETLeaf<int>*>(leaf)->m_value;
-            break;
-        case literalType::lit_long:
-            returnVal = dynamic_cast<ETLeaf<long>*>(leaf)->m_value;
-            break;
-        case literalType::lit_longlong:
-            returnVal = dynamic_cast<ETLeaf<long long>*>(leaf)->m_value;
-            break;
-        case literalType::lit_uint:
-            returnVal = dynamic_cast<ETLeaf<unsigned int>*>(leaf)->m_value;
-            break;
-        case literalType::lit_ulong:
-            returnVal = dynamic_cast<ETLeaf<unsigned long>*>(leaf)->m_value;
-            break;
-        case literalType::lit_ulonglong:
-            returnVal = dynamic_cast<ETLeaf<unsigned long long>*>(leaf)->m_value;
-            break;
-        case literalType::lit_double:
-            returnVal = dynamic_cast<ETLeaf<double>*>(leaf)->m_value;
-            break;
-        case literalType::lit_float:
-            returnVal = dynamic_cast<ETLeaf<float>*>(leaf)->m_value;
-            break;
-        case literalType::lit_longdouble:
-            returnVal = dynamic_cast<ETLeaf<long double>*>(leaf)->m_value;
-            break;
-        case literalType::lit_bool:
-            returnVal = dynamic_cast<ETLeaf<bool>*>(leaf)->m_value;
-            break;
-        case literalType::lit_char:
-            returnVal = dynamic_cast<ETLeaf<char>*>(leaf)->m_value;
-            break;
-        //case literalType::lit_char8: // c++20
-        //    returnVal = dynamic_cast<ETLeaf<char8_t>*>(leaf)->m_value;
-        //    break;
-        case literalType::lit_char16:
-            returnVal = dynamic_cast<ETLeaf<char16_t>*>(leaf)->m_value;
-            break;
-        case literalType::lit_char32:
-            returnVal = dynamic_cast<ETLeaf<char32_t>*>(leaf)->m_value;
-            break;
-        case literalType::lit_wchar:
-            returnVal = dynamic_cast<ETLeaf<wchar_t>*>(leaf)->m_value;
-            break;
-        default:
-            std::cout << "Hot Constants:  Arithmetic Evaluation Failure: _castETLeaf() called on an unhandled type!" << std::endl;
-            break;
-    }
+	{
+	    case literalType::lit_int:
+		    returnVal = dynamic_cast<ETLeaf<int>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<int>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<int>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    case literalType::lit_long:
+		    returnVal = dynamic_cast<ETLeaf<long>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<long>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<long>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    case literalType::lit_longlong:
+		    returnVal = dynamic_cast<ETLeaf<long long>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<long long>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<long long>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    case literalType::lit_uint:
+		    returnVal = dynamic_cast<ETLeaf<unsigned int>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<unsigned int>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<unsigned int>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    case literalType::lit_ulong:
+		    returnVal = dynamic_cast<ETLeaf<unsigned long>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<unsigned long>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<unsigned long>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    case literalType::lit_ulonglong:
+		    returnVal = dynamic_cast<ETLeaf<unsigned long long>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<unsigned long long>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<unsigned long long>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    case literalType::lit_double:
+		    returnVal = dynamic_cast<ETLeaf<double>*>(leaf)->m_value;
+		    break;
+	    case literalType::lit_float:
+		    returnVal = dynamic_cast<ETLeaf<float>*>(leaf)->m_value;
+		    break;
+	    case literalType::lit_longdouble:
+		    returnVal = dynamic_cast<ETLeaf<long double>*>(leaf)->m_value;
+		    break;
+	    case literalType::lit_bool:
+		    returnVal = dynamic_cast<ETLeaf<bool>*>(leaf)->m_value;
+		    break;
+	    case literalType::lit_char:
+		    returnVal = dynamic_cast<ETLeaf<char>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<char>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<char>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    //case literalType::lit_char8: // c++20
+		   // returnVal = dynamic_cast<ETLeaf<char8_t>*>(leaf)->m_value;
+		   // if (returnVal != dynamic_cast<ETLeaf<char8_t>*>(leaf)->m_value)
+		   // {
+                //std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                //    " constant value \"" << dynamic_cast<ETLeaf<char8_t>*>(leaf)->m_value <<
+                //    "\".  Is your constant type wide enough for your value?" << std::endl;
+		   // }
+		   // break;
+	    case literalType::lit_char16:
+		    returnVal = dynamic_cast<ETLeaf<char16_t>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<char16_t>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<char16_t>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    case literalType::lit_char32:
+		    returnVal = dynamic_cast<ETLeaf<char32_t>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<char32_t>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<char32_t>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    case literalType::lit_wchar:
+		    returnVal = dynamic_cast<ETLeaf<wchar_t>*>(leaf)->m_value;
+		    if (returnVal != dynamic_cast<ETLeaf<wchar_t>*>(leaf)->m_value)
+		    {
+                std::cout << "Hot Constants:  Warning: Data loss detected reloading"
+                    " constant value \"" << dynamic_cast<ETLeaf<wchar_t>*>(leaf)->m_value <<
+                    "\".  Is your constant type wide enough for your value?" << std::endl;
+		    }
+		    break;
+	    default:
+		    std::cout << "Hot Constants:  Arithmetic Evaluation Failure: _castETLeaf() called on an unhandled type!" << std::endl;
+		    break;
+	}
     
     return returnVal;
 }

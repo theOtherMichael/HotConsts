@@ -223,10 +223,19 @@ bool missingFinalLiteral()
         std::cout << "There was a memory leak.  Undeleted ETNodes: " << HotConsts::_nodeCount << std::endl;
     return result;
 }
-bool badFinalExpressionConversion()
+bool narrowingFinalConversion()
 {
     // We're testing that the conversion from the type resulting from the expression doesn't result in a conversion error.
-    return false;
+	std::string testExpr = "65535";
+	auto result = HotConsts::_evalArithmeticExpression<short>(testExpr);
+
+	if (HotConsts::_nodeCount != 0)
+		std::cout << "There was a memory leak.  Undeleted ETNodes: " << HotConsts::_nodeCount << std::endl;
+
+	if (result.first && result.second == (short)65535)
+		return true;
+	else
+		return false;
 }
 
 // Memory leaks -----------------------------------------------------------

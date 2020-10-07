@@ -174,7 +174,7 @@ int main()
     TEST(unexpectedNonLiteral);
     TEST(unexpectedNonOperator);
     TEST(missingFinalLiteral);
-    TEST(badFinalExpressionConversion);
+    TEST(narrowingFinalConversion);
     
     TESTHEADER("Memory leaks");
     TEST(noMemoryLeaks);
