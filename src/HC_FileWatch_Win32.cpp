@@ -124,7 +124,7 @@ void WaitForDirChange_Win32(size_t index)
 
 			if (notifyInfo->Action == FILE_ACTION_MODIFIED || notifyInfo->Action == FILE_ACTION_RENAMED_NEW_NAME)
 			{
-				_watchedDirMutexes().at(index).lock(); // TODO: use safer locks!
+				const std::lock_guard<std::mutex> lk(_watchedDirMutexes().at(index));
 
 				// See if the file that's changed is one of the ones we're tracking.
 				auto changedFilenameIt =
@@ -142,8 +142,6 @@ void WaitForDirChange_Win32(size_t index)
 						_watchedFilepathsPerDir().at(index).at(
 							changedFilenameIt - _watchedFilenamesPerDir().at(index).begin()));
 				}
-
-				_watchedDirMutexes().at(index).unlock();
 			}
 
 		} while (notifyInfo->NextEntryOffset != 0);
@@ -252,10 +250,9 @@ bool HC_FileWatchRegistry::addWatch(std::string filepath)
 											  filename);
 		if (registeredFilenameIt == _watchedFilenamesPerDir().at(index).end())
 		{
-			_watchedDirMutexes().at(index).lock();
+			const std::lock_guard<std::mutex> lk(_watchedDirMutexes().at(index));
 			_watchedFilepathsPerDir().at(index).emplace_back(filepath);
 			_watchedFilenamesPerDir().at(index).emplace_back(filename);
-			_watchedDirMutexes().at(index).unlock();
 		}
 		return true;
 	}
