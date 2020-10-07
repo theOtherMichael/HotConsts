@@ -75,6 +75,7 @@ int main()
 	TEST(convertUIntLiterals);
 	TEST(convertULongLiterals);
 	TEST(convertULongLongLiterals);
+    TEST(conversionPromotesIntegers);
 
 	TESTHEADER("Floating Point Literal Conversion");
 	TEST(convertDoubleLiterals);

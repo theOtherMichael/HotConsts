@@ -17,30 +17,30 @@ unaryOperationType _identifyUnaryOperator(std::string& token);
 
 // Integer type conversions
 
-std::pair<bool, int>				_convertLiteralTo_int(std::string& token, literalBase base);
-std::pair<bool, long>				_convertLiteralTo_long(std::string& token, literalBase base);
-std::pair<bool, long long>			_convertLiteralTo_longlong(std::string& token, literalBase base);
-std::pair<bool, unsigned int>		_convertLiteralTo_uint(std::string& token, literalBase base);
-std::pair<bool, unsigned long>		_convertLiteralTo_ulong(std::string& token, literalBase base);
-std::pair<bool, unsigned long long>	_convertLiteralTo_ulonglong(std::string& token, literalBase base);
+int				    _convertLiteralTo_int(std::string& token, literalBase base);
+long				_convertLiteralTo_long(std::string& token, literalBase base);
+long long			_convertLiteralTo_longlong(std::string& token, literalBase base);
+unsigned int		_convertLiteralTo_uint(std::string& token, literalBase base);
+unsigned long		_convertLiteralTo_ulong(std::string& token, literalBase base);
+unsigned long long	_convertLiteralTo_ulonglong(std::string& token, literalBase base);
 
 // Floating point type conversions
 
-std::pair<bool, float>				_convertLiteralTo_float(std::string& token, literalBase base);
-std::pair<bool, double>				_convertLiteralTo_double(std::string& token, literalBase base);
-std::pair<bool, long double>		_convertLiteralTo_longdouble(std::string& token, literalBase base);
+float				_convertLiteralTo_float(std::string& token, literalBase base);
+double				_convertLiteralTo_double(std::string& token, literalBase base);
+long double		    _convertLiteralTo_longdouble(std::string& token, literalBase base);
 
 // Char type conversions
 
-std::pair<bool, char>				_convertLiteralTo_char(std::string& token);
-//std::pair<bool, char8_t>			convertLiteralTo_char8(std::string& token); // c++20
-std::pair<bool, char16_t>			_convertLiteralTo_char16(std::string& token);
-std::pair<bool, char32_t>			_convertLiteralTo_char32(std::string& token);
-std::pair<bool, wchar_t>			_convertLiteralTo_wchar(std::string& token);
+char				_convertLiteralTo_char(std::string& token);
+//char8_t			convertLiteralTo_char8(std::string& token); // c++20
+char16_t			_convertLiteralTo_char16(std::string& token);
+char32_t			_convertLiteralTo_char32(std::string& token);
+wchar_t			    _convertLiteralTo_wchar(std::string& token);
 
 // Bool conversion
 
-std::pair<bool, bool>				_convertLiteralTo_bool(std::string& token);
+bool				_convertLiteralTo_bool(std::string& token);
 
 // String conversions
 // TODO: declare string conversion functions

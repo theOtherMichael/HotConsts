@@ -44,6 +44,7 @@ bool convertLongLongLiterals();
 bool convertUIntLiterals();
 bool convertULongLiterals();
 bool convertULongLongLiterals();
+bool conversionPromotesIntegers();
 
 bool convertDoubleLiterals();
 bool convertFloatLiterals();

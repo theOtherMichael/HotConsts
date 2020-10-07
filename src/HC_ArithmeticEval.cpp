@@ -32,122 +32,262 @@ bool ETNode::operator>=(const ETNode& other) const
 ETNode* _newETLeaf(std::string& lit)
 {
     ETNode* returnVal = nullptr;
-	auto [type, base] = _identifyArithmeticLiteral(lit);
-
-	switch (type)
-	{
-	case literalType::lit_int:
-	{
-		auto [success, val] = _convertLiteralTo_int(lit, base);
-		if (success)
-			returnVal = new ETLeaf<int>(type, val);
-		break;
-	}
-	case literalType::lit_long:
-	{
-		auto [success, val] = _convertLiteralTo_long(lit, base);
-		if (success)
-			returnVal = new ETLeaf<long>(type, val);
-		break;
-	}
-	case literalType::lit_longlong:
-	{
-		auto [success, val] = _convertLiteralTo_longlong(lit, base);
-		if (success)
-			returnVal = new ETLeaf<long long>(type, val);
-		break;
-	}
-	case literalType::lit_uint:
-	{
-		auto [success, val] = _convertLiteralTo_uint(lit, base);
-		if (success)
-			returnVal = new ETLeaf<unsigned int>(type, val);
-		break;
-	}
-	case literalType::lit_ulong:
-	{
-		auto [success, val] = _convertLiteralTo_ulong(lit, base);
-		if (success)
-			returnVal = new ETLeaf<unsigned long>(type, val);
-		break;
-	}
-	case literalType::lit_ulonglong:
-	{
-		auto [success, val] = _convertLiteralTo_ulonglong(lit, base);
-		if (success)
-			returnVal = new ETLeaf<unsigned long long>(type, val);
-		break;
-	}
-
-
-	case literalType::lit_double:
-	{
-		auto [success, val] = _convertLiteralTo_double(lit, base);
-		if (success)
-			returnVal = new ETLeaf<double>(type, val);
-		break;
-	}
-	case literalType::lit_float:
-	{
-		auto [success, val] = _convertLiteralTo_float(lit, base);
-		if (success)
-			returnVal = new ETLeaf<float>(type, val);
-		break;
-	}
-	case literalType::lit_longdouble:
-	{
-		auto [success, val] = _convertLiteralTo_longdouble(lit, base);
-		if (success)
-			returnVal = new ETLeaf<long double>(type, val);
-		break;
-	}
-
-
-	case literalType::lit_char:
-	{
-		auto [success, val] = _convertLiteralTo_char(lit);
-		if (success)
-			returnVal = new ETLeaf<char>(type, val);
-		break;
-	}
-	case literalType::lit_char16:
-	{
-		auto [success, val] = _convertLiteralTo_char16(lit);
-		if (success)
-			returnVal = new ETLeaf<char16_t>(type, val);
-		break;
-	}
-	case literalType::lit_char32:
-	{
-		auto [success, val] = _convertLiteralTo_char32(lit);
-		if (success)
-			returnVal = new ETLeaf<char32_t>(type, val);
-		break;
-	}
-	case literalType::lit_wchar:
-	{
-		auto [success, val] = _convertLiteralTo_wchar(lit);
-		if (success)
-			returnVal = new ETLeaf<wchar_t>(type, val);
-		break;
-	}
-
-
-	case literalType::lit_bool:
-	{
-		auto [success, val] = _convertLiteralTo_bool(lit);
-		if (success)
-			returnVal = new ETLeaf<bool>(type, val);
-		break;
-	}
-
-    case literalType::none:
+    auto [type, base] = _identifyArithmeticLiteral(lit);
+    
+    try // Catches invalid_argument exceptions
     {
-        std::cout << "Hot Constants:  _newETLeaf() was passed a token which didn't contain an identifiable literal.  "
-        "Token: \"" << lit << "\"" << std::endl;
-        break;
+        switch (type)
+        {
+            case literalType::lit_int:
+            {
+                try
+                {
+                    int val = _convertLiteralTo_int(lit, base);
+                    returnVal = new ETLeaf<int>(literalType::lit_int, val);
+                    break;
+                }
+                catch (std::out_of_range& e)
+                {
+                    // Attempt as long
+                    try
+                    {
+                        long val = _convertLiteralTo_long(lit, base);
+                        returnVal = new ETLeaf<long>(literalType::lit_long, val);
+                        break;
+                    }
+                    catch (std::out_of_range& e)
+                    {
+                        // Attempt as long long
+                        try
+                        {
+                            long long val = _convertLiteralTo_longlong(lit, base);
+                            returnVal = new ETLeaf<long long>(literalType::lit_longlong, val);
+                            break;
+                        }
+                        catch (std::out_of_range& e)
+                        {
+                            // There's no promotion possible per the C++ standard.
+                            std::cout << "Hot Constants:  Conversion failure: Literal value \"" << lit <<
+                                "\" is too large for any signed integral type." << std::endl;
+                        }
+                    }
+                }
+            }
+            case literalType::lit_long:
+            {
+                try
+                {
+                    long val = _convertLiteralTo_long(lit, base);
+                    returnVal = new ETLeaf<long>(literalType::lit_long, val);
+                    break;
+                }
+                catch (std::out_of_range& e)
+                {
+                    // Attempt as long long
+                    try
+                    {
+                        long long val = _convertLiteralTo_longlong(lit, base);
+                        returnVal = new ETLeaf<long long>(literalType::lit_longlong, val);
+                        break;
+                    }
+                    catch (std::out_of_range& e)
+                    {
+                        // There's no promotion possible per the C++ standard.
+                        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << lit <<
+                            "\" is too large for any signed integral type." << std::endl;
+                    }
+                }
+            }
+            case literalType::lit_longlong:
+            {
+                try
+                {
+                    long long val = _convertLiteralTo_longlong(lit, base);
+                    returnVal = new ETLeaf<long long>(literalType::lit_longlong, val);
+                    break;
+                }
+                catch (std::out_of_range& e)
+                {
+                    // There's no promotion possible per the C++ standard.
+                    std::cout << "Hot Constants:  Conversion failure: Literal value \"" << lit <<
+                        "\" is too large for any signed integral type." << std::endl;
+                }
+            }
+            case literalType::lit_uint:
+            {
+                try
+                {
+                    unsigned int val = _convertLiteralTo_uint(lit, base);
+                    returnVal = new ETLeaf<unsigned int>(literalType::lit_uint, val);
+                    break;
+                }
+                catch (std::out_of_range& e)
+                {
+                    // Attempt as unsigned long
+                    try
+                    {
+                        unsigned long val = _convertLiteralTo_ulong(lit, base);
+                        returnVal = new ETLeaf<unsigned long>(literalType::lit_ulong, val);
+                        break;
+                    }
+                    catch (std::out_of_range& e)
+                    {
+                        // Attempt as unsigned long long
+                        try
+                        {
+                            unsigned long long val = _convertLiteralTo_ulonglong(lit, base);
+                            returnVal = new ETLeaf<unsigned long long>(literalType::lit_ulonglong, val);
+                            break;
+                        }
+                        catch (std::out_of_range& e)
+                        {
+                            // There's no promotion possible per the C++ standard.
+                            std::cout << "Hot Constants:  Conversion failure: Literal value \"" << lit <<
+                                "\" is too large for any unsigned integral type." << std::endl;
+                        }
+                    }
+                }
+            }
+            case literalType::lit_ulong:
+            {
+                try
+                {
+                    unsigned long val = _convertLiteralTo_ulong(lit, base);
+                    returnVal = new ETLeaf<unsigned long>(literalType::lit_ulong, val);
+                    break;
+                }
+                catch (std::out_of_range& e)
+                {
+                    // Attempt as unsigned long long
+                    try
+                    {
+                        unsigned long long val = _convertLiteralTo_ulonglong(lit, base);
+                        returnVal = new ETLeaf<unsigned long long>(literalType::lit_ulonglong, val);
+                        break;
+                    }
+                    catch (std::out_of_range& e)
+                    {
+                        // There's no promotion possible per the C++ standard.
+                        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << lit <<
+                            "\" is too large for any unsigned integral type." << std::endl;
+                    }
+                }
+            }
+            case literalType::lit_ulonglong:
+            {
+                try
+                {
+                    unsigned long long val = _convertLiteralTo_ulonglong(lit, base);
+                    returnVal = new ETLeaf<unsigned long long>(literalType::lit_ulonglong, val);
+                    break;
+                }
+                catch (std::out_of_range& e)
+                {
+                    // There's no promotion possible per the C++ standard.
+                    std::cout << "Hot Constants:  Conversion failure: Literal value \"" << lit <<
+                        "\" is too large for any unsigned integral type." << std::endl;
+                }
+            }
+                
+                
+                
+            case literalType::lit_double:
+            {
+                try
+                {
+                    double val = _convertLiteralTo_double(lit, base);
+                    returnVal = new ETLeaf<double>(literalType::lit_double, val);
+                    break;
+                }
+                catch (std::out_of_range& e)
+                {
+                    // In some library implementations, this situation can be caused by underflows.
+                    std::cout << "Hot Constants:  Conversion failure: Literal value \"" << lit <<
+                        "\" falls out of range for type 'double'." << std::endl;
+                }
+            }
+            case literalType::lit_float:
+            {
+                try
+                {
+                    float val = _convertLiteralTo_float(lit, base);
+                    returnVal = new ETLeaf<float>(literalType::lit_float, val);
+                    break;
+                }
+                catch (std::out_of_range& e)
+                {
+                    // In some library implementations, this situation can be caused by underflows.
+                    std::cout << "Hot Constants:  Conversion failure: Literal value \"" << lit <<
+                        "\" falls out of range for type 'float'." << std::endl;
+                }
+            }
+            case literalType::lit_longdouble:
+            {
+                try
+                {
+                    long double val = _convertLiteralTo_longdouble(lit, base);
+                    returnVal = new ETLeaf<long double>(literalType::lit_longdouble, val);
+                    break;
+                }
+                catch (std::out_of_range& e)
+                {
+                    // In some library implementations, this situation can be caused by underflows.
+                    std::cout << "Hot Constants:  Conversion failure: Literal value \"" << lit <<
+                        "\" falls out of range for type 'long double'." << std::endl;
+                }
+            }
+                
+                
+                
+            case literalType::lit_char:
+            {
+                char val = _convertLiteralTo_char(lit);
+                returnVal = new ETLeaf<char>(literalType::lit_char, val);
+                break;
+            }
+            case literalType::lit_char16:
+            {
+                char16_t val = _convertLiteralTo_char16(lit);
+                returnVal = new ETLeaf<char16_t>(literalType::lit_char16, val);
+                break;
+            }
+            case literalType::lit_char32:
+            {
+                char32_t val = _convertLiteralTo_char32(lit);
+                returnVal = new ETLeaf<char32_t>(literalType::lit_char32, val);
+                break;
+            }
+            case literalType::lit_wchar:
+            {
+                wchar_t val = _convertLiteralTo_wchar(lit);
+                returnVal = new ETLeaf<wchar_t>(literalType::lit_wchar, val);
+                break;
+            }
+                
+                
+                
+            case literalType::lit_bool:
+            {
+                bool val = _convertLiteralTo_bool(lit);
+                returnVal = new ETLeaf<bool>(literalType::lit_bool, val);
+                break;
+            }
+                
+            case literalType::none:
+            {
+                std::cout << "Hot Constants:  _newETLeaf() was passed a token which didn't contain an identifiable literal.  "
+                "Token: \"" << lit << "\"" << std::endl;
+                break;
+            }
+        }
     }
-	}
+    catch (std::invalid_argument& e)
+    {
+        // Handle a bad literal.
+        std::cout << "Hot Constants:  _newETLeaf() was passed a token which was identifed as a literal but was identified"
+            " as an invalid argument by a string conversion function.  Token: " << lit << ", identified as literalType: "
+            << int(type) << std::endl;
+    }
 
     return returnVal;
 }

@@ -235,382 +235,242 @@ unaryOperationType _identifyUnaryOperator(std::string& token)
 
 // Integer conversions
 
-std::pair<bool, int> _convertLiteralTo_int(std::string& token, literalBase base)
+int _convertLiteralTo_int(std::string& token, literalBase base)
 {
-    std::pair<bool, int> returnVal = {true, 0};
+    int returnVal = 0;
     size_t postLiteralPos = 0;
 
-    try
+    switch (base)
     {
-        switch (base)
-        {
         case literalBase::binary:
             // 0b or 0B prefix.  This is not handled in stoi.
             token.erase(0, 2);
-            returnVal.second = stoi(token, &postLiteralPos, 2);
+            returnVal = stoi(token, &postLiteralPos, 2);
             break;
         default:
             // stoi already handles decimal, hex, and oct.
-            returnVal.second = stoi(token, &postLiteralPos, 0);
+            returnVal = stoi(token, &postLiteralPos, 0);
             break;
-        }
-
-        if (postLiteralPos < token.length())
-        {
-            // The literal has unexpected characters following it, making it invalid.
-            returnVal.first = false;
-        }
     }
-    catch (std::out_of_range& e)
-	{
-		std::cout << "Hot Constants:  Conversion failure: Literal value \"" << token <<
-            "\" is too large for type 'int'." << std::endl;
-        returnVal.first = false;
-	}
-	catch (std::invalid_argument& e)
-	{
-        returnVal.first = false;
-	}
+    
+    if (postLiteralPos < token.length())
+        throw std::invalid_argument("Hot Consts:  The literal has an invalid suffix.");
 
     return returnVal;
 }
 
-std::pair<bool, long> _convertLiteralTo_long(std::string& token, literalBase base)
+long _convertLiteralTo_long(std::string& token, literalBase base)
 {
-    std::pair<bool, long> returnVal = {true, 0};
+    long returnVal = 0;
     size_t postLiteralPos = 0;
 
-    try
+    switch (base)
     {
-        switch (base)
-        {
         case literalBase::binary:
             // 0b or 0B prefix.  This is not handled in stol.
             token.erase(0, 2);
-            returnVal.second = stol(token, &postLiteralPos, 2);
+            returnVal = stol(token, &postLiteralPos, 2);
             break;
         default:
             // stol already handles decimal, hex, and oct.
-            returnVal.second = stol(token, &postLiteralPos, 0);
+            returnVal = stol(token, &postLiteralPos, 0);
             break;
-        }
-
-        postLiteralPos++; // An "l" or "L" suffix is expected.
-        if (postLiteralPos < token.length())
-        {
-            // The literal has unexpected characters following it, making it invalid.
-            returnVal.first = false;
-        }
     }
-    catch (std::out_of_range& e)
-    {
-        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << token <<
-        "\" is too large for type 'long'." << std::endl;
-        returnVal.first = false;
-    }
-    catch (std::invalid_argument& e)
-    {
-        returnVal.first = false;
-    }
-
+    
+    postLiteralPos++; // An "l" or "L" suffix is expected.
+    if (postLiteralPos < token.length())
+        throw std::invalid_argument("Hot Consts:  The literal has an invalid suffix.");
+    
     return returnVal;
 }
 
-std::pair<bool, long long> _convertLiteralTo_longlong(std::string& token, literalBase base)
+long long _convertLiteralTo_longlong(std::string& token, literalBase base)
 {
-    std::pair<bool, long long> returnVal = {true, 0};
+    long long returnVal = 0;
     size_t postLiteralPos = 0;
 
-    try
+    switch (base)
     {
-        switch (base)
-        {
         case literalBase::binary:
             // 0b or 0B prefix.  This is not handled in stoll.
             token.erase(0, 2);
-            returnVal.second = stoll(token, &postLiteralPos, 2);
+            returnVal = stoll(token, &postLiteralPos, 2);
             break;
         default:
             // stoll already handles decimal, hex, and oct.
-            returnVal.second = stoll(token, &postLiteralPos, 0);
+            returnVal = stoll(token, &postLiteralPos, 0);
             break;
-        }
-
-        postLiteralPos += 2; // An "ll" or "LL" suffix is expected.
-        if (postLiteralPos < token.length())
-        {
-            // The literal has unexpected characters following it, making it invalid.
-            returnVal.first = false;
-        }
-    }
-    catch (std::out_of_range& e)
-    {
-        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << token <<
-        "\" is too large for type 'long long'." << std::endl;
-        returnVal.first = false;
-    }
-    catch (std::invalid_argument& e)
-    {
-        returnVal.first = false;
     }
 
+    postLiteralPos += 2; // An "ll" or "LL" suffix is expected.
+    if (postLiteralPos < token.length())
+        throw std::invalid_argument("Hot Consts:  The literal has an invalid suffix.");
+    
     return returnVal;
 }
 
-std::pair<bool, unsigned int> _convertLiteralTo_uint(std::string& token, literalBase base)
+unsigned int _convertLiteralTo_uint(std::string& token, literalBase base)
 {
-    std::pair<bool, unsigned int> returnVal = {true, 0};
+    unsigned long returnVal = 0;
     size_t postLiteralPos = 0;
 
-    try
+    switch (base)
     {
-        switch (base)
-        {
         case literalBase::binary:
             // 0b or 0B prefix.  This is not handled in stoul.
             token.erase(0, 2);
-            returnVal.second = stoul(token, &postLiteralPos, 2); //TODO: Handle out of range inputs!
+            returnVal = stoul(token, &postLiteralPos, 2); //TODO: Handle out of range inputs!
             break;
         default:
             // stoul already handles decimal, hex, and oct.
-            returnVal.second = stoul(token, &postLiteralPos, 0);
+            returnVal = stoul(token, &postLiteralPos, 0);
             break;
-        }
-
-        postLiteralPos++; // A "u" or "U" suffix is expected.
-        if (postLiteralPos < token.length())
-        {
-            // The literal has unexpected characters following it, making it invalid.
-            returnVal.first = false;
-        }
-    }
-    catch (std::out_of_range& e)
-    {
-        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << token <<
-        "\" is too large for type 'unsigned int'." << std::endl;
-        returnVal.first = false;
-    }
-    catch (std::invalid_argument& e)
-    {
-        returnVal.first = false;
     }
 
+    if (returnVal > UINT_MAX)
+    {
+        throw std::out_of_range("Hot Consts:  An unsigned int literal was out of range.");
+    }
+
+    postLiteralPos++; // A "u" or "U" suffix is expected.
+    if (postLiteralPos < token.length())
+        throw std::invalid_argument("Hot Consts:  The literal has an invalid suffix.");
+    
     return returnVal;
 }
 
-std::pair<bool, unsigned long> _convertLiteralTo_ulong(std::string& token, literalBase base)
+unsigned long _convertLiteralTo_ulong(std::string& token, literalBase base)
 {
-    std::pair<bool, unsigned long> returnVal = {true, 0};
+    unsigned long returnVal = 0;
     size_t postLiteralPos = 0;
 
-    try
+    switch (base)
     {
-        switch (base)
-        {
         case literalBase::binary:
             // 0b or 0B prefix.  This is not handled in stoul.
             token.erase(0, 2);
-            returnVal.second = stoul(token, &postLiteralPos, 2);
+            returnVal = stoul(token, &postLiteralPos, 2);
             break;
         default:
             // stoul already handles decimal, hex, and oct.
-            returnVal.second = stoul(token, &postLiteralPos, 0);
+            returnVal = stoul(token, &postLiteralPos, 0);
             break;
-        }
-
-        postLiteralPos += 2; // A "ul" or "UL" suffix is expected.
-        if (postLiteralPos < token.length())
-        {
-            // The literal has unexpected characters following it, making it invalid.
-            returnVal.first = false;
-        }
     }
-    catch (std::out_of_range& e)
-    {
-        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << token <<
-        "\" is too large for type 'unsigned long'." << std::endl;
-        returnVal.first = false;
-    }
-    catch (std::invalid_argument& e)
-    {
-        returnVal.first = false;
-    }
-
+    
+    postLiteralPos += 2; // A "ul" or "UL" suffix is expected.
+    if (postLiteralPos < token.length())
+        throw std::invalid_argument("Hot Consts:  The literal has an invalid suffix.");
+    
     return returnVal;
 }
 
-std::pair<bool, unsigned long long> _convertLiteralTo_ulonglong(std::string& token, literalBase base)
+unsigned long long _convertLiteralTo_ulonglong(std::string& token, literalBase base)
 {
-    std::pair<bool, unsigned long long> returnVal = {true, 0};
+    unsigned long long returnVal = 0;
     size_t postLiteralPos = 0;
 
-    try
+    switch (base)
     {
-        switch (base)
-        {
         case literalBase::binary:
             // 0b or 0B prefix.  This is not handled in stoull.
             token.erase(0, 2);
-            returnVal.second = stoull(token, &postLiteralPos, 2);
+            returnVal = stoull(token, &postLiteralPos, 2);
             break;
         default:
             // stoull already handles decimal, hex, and oct.
-            returnVal.second = stoull(token, &postLiteralPos, 0);
+            returnVal = stoull(token, &postLiteralPos, 0);
             break;
-        }
-
-        postLiteralPos += 3; // A "ull" or "ULL" suffix is expected.
-        if (postLiteralPos < token.length())
-        {
-            // The literal has unexpected characters following it, making it invalid.
-            returnVal.first = false;
-        }
     }
-    catch (std::out_of_range& e)
-    {
-        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << token <<
-        "\" is too large for type 'unsigned long long'." << std::endl;
-        returnVal.first = false;
-    }
-    catch (std::invalid_argument& e)
-    {
-        returnVal.first = false;
-    }
-
+    
+    postLiteralPos += 3; // A "ull" or "ULL" suffix is expected.
+    if (postLiteralPos < token.length())
+        throw std::invalid_argument("Hot Consts:  The literal has an invalid suffix.");
+    
     return returnVal;
 }
 
 // Floating point conversions
 
-std::pair<bool, double> _convertLiteralTo_double(std::string& token, literalBase base)
+double _convertLiteralTo_double(std::string& token, literalBase base)
 {
-    std::pair<bool, double> returnVal = {true, 0};
+    double returnVal = 0;
     size_t postLiteralPos = 0;
 
-    try
-    {
-        returnVal.second = stod(token, &postLiteralPos);
+    returnVal = stod(token, &postLiteralPos);
 
-        if (postLiteralPos < token.length())
-        {
-            // The literal has unexpected characters following it, making it invalid.
-            returnVal.first = false;
-        }
-    }
-    catch (std::out_of_range& e)
-    {
-        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << token <<
-        "\" is too large for type 'double'." << std::endl;
-        returnVal.first = false;
-    }
-    catch (std::invalid_argument& e)
-    {
-        returnVal.first = false;
-    }
-
+    if (postLiteralPos < token.length())
+        throw std::invalid_argument("Hot Consts:  The literal has an invalid suffix.");
+    
     return returnVal;
 }
 
-std::pair<bool, float> _convertLiteralTo_float(std::string& token, literalBase base)
+float _convertLiteralTo_float(std::string& token, literalBase base)
 {
-    std::pair<bool, float> returnVal = {true, 0};
+    float returnVal = 0;
     size_t postLiteralPos = 0;
 
-    try
-    {
-        returnVal.second = stof(token, &postLiteralPos);
+    returnVal = stof(token, &postLiteralPos);
 
-        postLiteralPos++; // An "f" or "F" suffix is expected.
-        if (postLiteralPos < token.length())
-        {
-            // The literal has unexpected characters following it, making it invalid.
-            returnVal.first = false;
-        }
-    }
-    catch (std::out_of_range& e)
-    {
-        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << token <<
-        "\" is too large for type 'float'." << std::endl;
-        returnVal.first = false;
-    }
-    catch (std::invalid_argument& e)
-    {
-        returnVal.first = false;
-    }
-
+    postLiteralPos++; // An "f" or "F" suffix is expected.
+    
+    if (postLiteralPos < token.length())
+        throw std::invalid_argument("Hot Consts:  The literal has an invalid suffix.");
+    
     return returnVal;
 }
 
-std::pair<bool, long double> _convertLiteralTo_longdouble(std::string& token, literalBase base)
+long double _convertLiteralTo_longdouble(std::string& token, literalBase base)
 {
-    std::pair<bool, long double> returnVal = {true, 0};
+    long double returnVal = 0;
     size_t postLiteralPos = 0;
 
-    try
-    {
-        returnVal.second = stold(token, &postLiteralPos);
+    returnVal = stold(token, &postLiteralPos);
 
-        postLiteralPos++; // An "l" or "L" suffix is expected.
-        if (postLiteralPos < token.length())
-        {
-            // The literal has unexpected characters following it, making it invalid.
-            returnVal.first = false;
-        }
-    }
-    catch (std::out_of_range& e)
-    {
-        std::cout << "Hot Constants:  Conversion failure: Literal value \"" << token <<
-        "\" is too large for type 'long double'." << std::endl;
-        returnVal.first = false;
-    }
-    catch (std::invalid_argument& e)
-    {
-        returnVal.first = false;
-    }
-
+    postLiteralPos++; // An "l" or "L" suffix is expected.
+    if (postLiteralPos < token.length())
+        throw std::invalid_argument("Hot Consts:  The literal has an invalid suffix.");
+    
     return returnVal;
 }
 
 // Char conversions
 // TODO: actually implement these
 
-std::pair<bool, char> _convertLiteralTo_char(std::string& token)
+char _convertLiteralTo_char(std::string& token)
 {
-    return std::pair(false, '0');
+    return '0';
 }
 
-std::pair<bool, char16_t> _convertLiteralTo_char16(std::string& token)
+char16_t _convertLiteralTo_char16(std::string& token)
 {
-    return std::pair(false, '0');
+    return '0';
 }
 
-std::pair<bool, char32_t> _convertLiteralTo_char32(std::string& token)
+char32_t _convertLiteralTo_char32(std::string& token)
 {
-    return std::pair(false, '0');
+    return '0';
 }
 
-std::pair<bool, wchar_t> _convertLiteralTo_wchar(std::string& token)
+wchar_t _convertLiteralTo_wchar(std::string& token)
 {
-    return std::pair(false, '0');
+    return '0';
 }
 
-std::pair<bool, int> convertLiteralTo_multichar(std::string& token)
+int convertLiteralTo_multichar(std::string& token)
 {
-    return std::pair(false, '0');
+    return '0';
 }
 
 // Bool conversion
 
-std::pair<bool, bool> _convertLiteralTo_bool(std::string& token)
+bool _convertLiteralTo_bool(std::string& token)
 {
     if (token == "true")
-        return std::pair(true, true);
+        return true;
     else if (token == "false")
-        return std::pair(true, false);
+        return false;
     else
-    {
-        return std::pair(false, false);
-    }
+        throw std::invalid_argument("Hot Constants:  _convertLiteralTo_bool() was called with an invalid token.");
 }
 
 
