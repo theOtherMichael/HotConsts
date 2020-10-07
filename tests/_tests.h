@@ -172,7 +172,7 @@ bool reloadCatchesFileOpenFailure();
 bool reloadHandlesBadParams();
 bool reloadHandlesBadAssignment();
 bool reloadHandlesNewParams();
-bool reloadHandlesRedefinitions(); //
+bool reloadHandlesRedefinitions();
 bool reloadHandlesEOF_awaitingLParentheses();
 bool reloadHandlesEOF_awaitingParam1();
 bool reloadHandlesEOF_awaitingComma();

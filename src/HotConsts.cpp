@@ -129,6 +129,7 @@ void _reloadSrcFile(const std::string& filename)
 {
     std::ifstream srcFile(filename);
 
+    std::vector<std::string> reloadedHCNames;
     int repeatCount = 0;
     
     while (repeatCount < 5)
@@ -371,6 +372,18 @@ void _reloadSrcFile(const std::string& filename)
                                 try
                                 {
                                     std::tie(registeredTypeStrName, reloadFn, valueIndex) = _getReloadMap().at(std::pair(filename, HCNameStr));
+                                    // If the above statement didn't throw, this is assumed to be one of the registered constants.
+
+                                    if (std::find(reloadedHCNames.begin(), reloadedHCNames.end(), HCNameStr) != reloadedHCNames.end())
+                                    {
+                                        std::cout << "Hot Constants:  Error: Redefinition of constant \"" << HCNameStr << "\".  "
+                                            "Modified code may not compile.  Value will reflect first found definition in file."
+                                            "\n                File: " << filename << ", Line: " << macroLine << std::endl;
+                                        HCTypeStr.clear();
+                                        currentState = parserState::awaitingMacro;
+                                    }
+                                    else
+                                        reloadedHCNames.emplace_back(HCNameStr);
                                 }
                                 catch (const std::out_of_range& e)
                                 {
