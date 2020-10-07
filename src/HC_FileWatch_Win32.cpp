@@ -182,12 +182,15 @@ bool HC_FileWatchRegistry::addWatch(std::string filepath)
 
 	// Split the filepath into filename and dirpath strings.
 	size_t finalSlashPos = filepath_wstr.rfind(L"\\");
-	if (finalSlashPos + 1 >= filepath_wstr.length()) //TODO: see if this check shouldn't be removed.
-	{
-		std::wcout << L"Hot Constants:  Error: HC_FileWatchRegistry::addWatch() "
-			"was passed invalid filepath \"" << filepath_wstr << L"\"." << std::endl;
-		return false;
-	}
+
+	// The following test, which ensures the filepath doesn't end in a slash, is now redundant.
+	//if (finalSlashPos + 1 >= filepath_wstr.length())
+	//{
+	//	std::wcout << L"Hot Constants:  Error: HC_FileWatchRegistry::addWatch() "
+	//		"was passed invalid filepath \"" << filepath_wstr << L"\"." << std::endl;
+	//	return false;
+	//}
+	
 	auto filename = filepath_wstr.substr(finalSlashPos + 1);
 	auto dirpath = filepath_wstr.substr(0, finalSlashPos);
 
