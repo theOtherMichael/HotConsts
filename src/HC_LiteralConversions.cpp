@@ -319,7 +319,7 @@ unsigned int _convertLiteralTo_uint(std::string& token, literalBase base)
         case literalBase::binary:
             // 0b or 0B prefix.  This is not handled in stoul.
             token.erase(0, 2);
-            returnVal = stoul(token, &postLiteralPos, 2); //TODO: Handle out of range inputs!
+            returnVal = stoul(token, &postLiteralPos, 2);
             break;
         default:
             // stoul already handles decimal, hex, and oct.
@@ -327,9 +327,10 @@ unsigned int _convertLiteralTo_uint(std::string& token, literalBase base)
             break;
     }
 
+    // Because there's no "stou" in the standard library, we must "fake" out of range conversions here.
     if (returnVal > UINT_MAX)
     {
-        throw std::out_of_range("Hot Consts:  An unsigned int literal was out of range.");
+        throw std::out_of_range("Hot Consts:  An 'unsigned int' literal was out of range.");
     }
 
     postLiteralPos++; // A "u" or "U" suffix is expected.
