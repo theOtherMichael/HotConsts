@@ -12,6 +12,7 @@
 
 #include <thread>
 #include <mutex>
+#include <shared_mutex>
 #include <atomic>
 
 #ifdef _WIN32

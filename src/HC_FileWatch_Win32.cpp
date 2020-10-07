@@ -21,14 +21,6 @@ std::vector<std::vector<std::wstring>>& _watchedFilenamesPerDir()
 		= new std::vector<std::vector<std::wstring>>();
 	return *instance;
 };
-std::deque<std::mutex>& _watchedDirMutexes()
-{
-	static std::deque<std::mutex>* instance
-		= new std::deque<std::mutex>();
-	return *instance;
-};
-
-
 std::vector<HANDLE>& _openDirHandles()
 {
 	static std::vector<HANDLE>* instance
@@ -39,6 +31,11 @@ std::vector<std::thread>& _watchThreads()
 {
 	static std::vector<std::thread>* instance
 		= new std::vector<std::thread>();
+	return *instance;
+};
+std::shared_mutex& _watchRegistrationMutex() // allows safe registration of new threads.
+{
+	static std::shared_mutex* instance = new std::shared_mutex();
 	return *instance;
 };
 
@@ -101,8 +98,14 @@ void WaitForDirChange_Win32(size_t index)
 	FILE_NOTIFY_INFORMATION* notifyInfo;
 	DWORD bytesReturned;
 
+	HANDLE handle;
+	{
+		const std::shared_lock lock(_watchRegistrationMutex());
+		handle = _openDirHandles().at(index);
+	}
+
 	// Sleep until a file was changed in the directory.
-	while (ReadDirectoryChangesW(_openDirHandles().at(index),
+	while (ReadDirectoryChangesW(handle,
 								 buffer,
 								 sizeof(buffer),
 								 FALSE,
@@ -124,7 +127,7 @@ void WaitForDirChange_Win32(size_t index)
 
 			if (notifyInfo->Action == FILE_ACTION_MODIFIED || notifyInfo->Action == FILE_ACTION_RENAMED_NEW_NAME)
 			{
-				const std::lock_guard<std::mutex> lk(_watchedDirMutexes().at(index));
+				const std::shared_lock lock(_watchRegistrationMutex());
 
 				// See if the file that's changed is one of the ones we're tracking.
 				auto changedFilenameIt =
@@ -194,6 +197,7 @@ bool HC_FileWatchRegistry::addWatch(std::string filepath)
 	auto filename = filepath_wstr.substr(finalSlashPos + 1);
 	auto dirpath = filepath_wstr.substr(0, finalSlashPos);
 
+	const std::unique_lock lock(_watchRegistrationMutex());
 
 	// Check whether this directory already has a thread watching it.
 	auto dirPathIt = std::find(_watchedDirPaths().begin(),
@@ -226,12 +230,10 @@ bool HC_FileWatchRegistry::addWatch(std::string filepath)
 		else
 		{
 			// Register folder
-            // TODO: Confirm that this is thread-safe.
 			_watchedDirPaths().emplace_back(dirpath);
 			_openDirHandles().emplace_back(directoryHandle);
 			_watchedFilepathsPerDir().emplace_back();
 			_watchedFilenamesPerDir().emplace_back();
-			_watchedDirMutexes().emplace_back();
 			
 			// Register file watch
 			_watchedFilepathsPerDir().back().emplace_back(filepath);
@@ -253,7 +255,6 @@ bool HC_FileWatchRegistry::addWatch(std::string filepath)
 											  filename);
 		if (registeredFilenameIt == _watchedFilenamesPerDir().at(index).end())
 		{
-			const std::lock_guard<std::mutex> lk(_watchedDirMutexes().at(index));
 			_watchedFilepathsPerDir().at(index).emplace_back(filepath);
 			_watchedFilenamesPerDir().at(index).emplace_back(filename);
 		}
