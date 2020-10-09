@@ -241,8 +241,9 @@ ETNode* _newETLeaf(std::string& lit)
                 }
                 catch (std::out_of_range& e)
                 {
+                    // TODO: This can be promoted to type 'int', though the results are implementation-defined.
                     std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
-                        "\" falls out of range for type 'char'." << std::endl;
+                        "\" falls out of range for character literals." << std::endl;
                 }
             }
                 break;
@@ -250,13 +251,13 @@ ETNode* _newETLeaf(std::string& lit)
             {
                 try
                 {
-                    char val = _convertLiteralTo_char(lit);
+                    char val = _convertLiteralTo_char8(lit);
                     returnVal = new ETLeaf<char>(literalType::lit_char8, val); //TODO: Change to char8_t in c++20
                 }
                 catch (std::out_of_range& e)
                 {
                     std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
-                        "\" falls out of range for type 'char'." << std::endl;
+                        "\" falls out of range for UTF-8 literals." << std::endl;
                 }
             }
                 break;
@@ -270,7 +271,7 @@ ETNode* _newETLeaf(std::string& lit)
                 catch (std::out_of_range& e)
                 {
                     std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
-                        "\" falls out of range for type 'char16_t'." << std::endl;
+                        "\" falls out of range for UTF-16 literals." << std::endl;
                 }
             }
                 break;
@@ -284,7 +285,7 @@ ETNode* _newETLeaf(std::string& lit)
                 catch (std::out_of_range& e)
                 {
                     std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
-                        "\" falls out of range for type 'char32_t'." << std::endl;
+                        "\" falls out of range for UTF-32 literals." << std::endl;
                 }
             }
                 break;
@@ -298,7 +299,7 @@ ETNode* _newETLeaf(std::string& lit)
                 catch (std::out_of_range& e)
                 {
                     std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
-                        "\" falls out of range for type 'wchar_t'." << std::endl;
+                        "\" falls out of range for type wide character literals." << std::endl;
                 }
             }
                 break;
@@ -325,7 +326,7 @@ ETNode* _newETLeaf(std::string& lit)
         // Handle a bad literal.
         std::cout << "Hot Constants:  _newETLeaf() was passed a token which was identifed as a literal but was identified"
             " as an invalid argument by a string conversion function.  Token: " << lit << ", identified as literalType: "
-            << int(type) << std::endl;
+            << int(type) << ".  e.what(): " << e.what() << std::endl;
     }
 
     return returnVal;
