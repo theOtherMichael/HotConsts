@@ -539,7 +539,7 @@ char _convertLiteralTo_char(std::string& token)
                 long converted = std::stol(val, &postpos, 8);
                 if (postpos < val.length())
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_char() was passed an invalid literal.");
-                if (converted > 255)
+                if (converted > 0377)
                     throw std::out_of_range("Hot Constants:  Octal escape sequence out of range.");
                 return converted;
             }
@@ -635,7 +635,7 @@ char _convertLiteralTo_char8(std::string& token) // C++17 TODO: change this to c
                 long converted = std::stol(val, &postpos, 16);
                 if (postpos < val.length())
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_char8() was passed an invalid literal.");
-                if (converted > RANGEOFTYPE(char)) // TODO: Change this to UCHAR_MAX in c++20
+                if (converted > 0x7F) // Largest valid UTF-8 literal
                     throw std::out_of_range("Hot Constants:  Hex escape sequence out of range.");
                 return converted;
             }
@@ -663,7 +663,7 @@ char _convertLiteralTo_char8(std::string& token) // C++17 TODO: change this to c
                 long converted = std::stol(val, &postpos, 8);
                 if (postpos < val.length())
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_char8() was passed an invalid literal.");
-                if (converted > 255)
+                if (converted > 0177)
                     throw std::out_of_range("Hot Constants:  Octal escape sequence out of range.");
                 return converted;
             }
@@ -759,7 +759,7 @@ char16_t _convertLiteralTo_char16(std::string& token)
                 long converted = std::stol(val, &postpos, 16);
                 if (postpos < val.length())
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_char16() was passed an invalid literal.");
-                if (converted > UINT_LEAST16_MAX)
+                if (converted > 0xFFFF) // Largest valid UTF-16 literal
                     throw std::out_of_range("Hot Constants:  Hex escape sequence out of range.");
                 return converted;
             }
@@ -787,7 +787,7 @@ char16_t _convertLiteralTo_char16(std::string& token)
                 long converted = std::stol(val, &postpos, 8);
                 if (postpos < val.length())
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_char16() was passed an invalid literal.");
-                if (converted > 255)
+                if (converted > 0777)
                     throw std::out_of_range("Hot Constants:  Octal escape sequence out of range.");
                 return converted;
             }
@@ -911,7 +911,7 @@ char32_t _convertLiteralTo_char32(std::string& token)
                 long converted = std::stol(val, &postpos, 8);
                 if (postpos < val.length())
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_char32() was passed an invalid literal.");
-                if (converted > 255)
+                if (converted > 0777)
                     throw std::out_of_range("Hot Constants:  Octal escape sequence out of range.");
                 return converted;
             }
@@ -1035,7 +1035,7 @@ wchar_t _convertLiteralTo_wchar(std::string& token)
                 long converted = std::stol(val, &postpos, 8);
                 if (postpos < val.length())
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_wchar() was passed an invalid literal.");
-                if (converted > 255)
+                if (converted > 0777)
                     throw std::out_of_range("Hot Constants:  Octal escape sequence out of range.");
                 return converted;
             }

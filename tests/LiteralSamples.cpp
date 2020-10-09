@@ -1491,10 +1491,10 @@ std::vector<std::string> char8Literals //c++17
     "u8'\\r'",
     "u8'\\t'",
     "u8'\\v'",
-    "u8'\\377'",                //octal (max three digits)
+    "u8'\\177'",                //octal (max three digits)
     "u8'\\77'",                //octal
     "u8'\\7'",                //octal
-    "u8'\\xFF'",                //hex (no max)
+    "u8'\\x7F'",                //hex (no max)
     "u8'\\xF'",                //hex
     "u8'\\u0040'",            //unicode
     "u8'\\U00000040'"        //unicode
@@ -1516,7 +1516,7 @@ std::vector<std::string> char16Literals
     "u'\\r'",
     "u'\\t'",
     "u'\\v'",
-    "u'\\377'",                //octal (max three digits)
+    "u'\\777'",                //octal (max three digits)
     "u'\\77'",                //octal
     "u'\\7'",                //octal
     "u'\\xFF'",                //hex (no max)
@@ -1542,7 +1542,7 @@ std::vector<std::string> char32Literals
     "U'\\r'",
     "U'\\t'",
     "U'\\v'",
-    "U'\\377'",                //octal (max three digits)
+    "U'\\777'",                //octal (max three digits)
     "U'\\77'",                //octal
     "U'\\7'",                //octal
     "U'\\xFF'",                //hex (no max)
@@ -1567,7 +1567,7 @@ std::vector<std::string> wcharLiterals
     "L'\\r'",
     "L'\\t'",
     "L'\\v'",
-    "L'\\377'",                //octal (max three digits)
+    "L'\\777'",                //octal (max three digits)
     "L'\\77'",                //octal
     "L'\\7'",                //octal
     "L'\\xFF'",                //hex (no max)
@@ -1619,10 +1619,10 @@ std::vector<std::pair<literalType, literalBase>> char8LiteralIdentities //c++17
     std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\r'
     std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\t'
     std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\v'
-    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\377'          //octal (max three digits)
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\177'          //octal (max three digits)
     std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\77'           //octal
     std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\7'            //octal
-    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\xFF'          //hex (no max)
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\x7F'          //hex (no max)
     std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\xF'           //hex
     std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\u0040'        //unicode
     std::pair(literalType::lit_char8, literalBase::notapplicable)  // u8'\U00000040'    //unicode
@@ -1645,7 +1645,7 @@ std::vector<std::pair<literalType, literalBase>> char16LiteralIdentities
     std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\r'
     std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\t'
     std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\v'
-    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\377'       //octal (max three digits)
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\777'       //octal (max three digits)
     std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\77'        //octal
     std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\7'         //octal
     std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\xFF'       //hex (no max)
@@ -1671,7 +1671,7 @@ std::vector<std::pair<literalType, literalBase>> char32LiteralIdentities
     std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\r'
     std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\t'
     std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\v'
-    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\377'          //octal (max three digits)
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\777'          //octal (max three digits)
     std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\77'           //octal
     std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\7'            //octal
     std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\xFF'          //hex (no max)
@@ -1696,7 +1696,7 @@ std::vector<std::pair<literalType, literalBase>> wcharLiteralIdentities
 	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\r'
 	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\t'
 	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\v'
-    std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\377'      	//octal (max three digits)
+    std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\777'      	//octal (max three digits)
     std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\77'       	//octal
     std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\7'        	//octal
     std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\xFF'      	//hex (no max)
@@ -1747,10 +1747,10 @@ std::vector<char> char8LiteralConversions //c++17 TODO: Change type to char8_t i
     u8'\r',
     u8'\t',
     u8'\v',
-    u8'\377',                //octal (max three digits)
+    u8'\177',                //octal (max three digits)
     u8'\77',                //octal
     u8'\7',                //octal
-    u8'\xFF',                //hex (no max)
+    u8'\x7F',                //hex (no max)
     u8'\xF',                //hex
     u8'\u0040',            //unicode
     u8'\U00000040'        //unicode
@@ -1772,7 +1772,7 @@ std::vector<char16_t> char16LiteralConversions
     u'\r',
     u'\t',
     u'\v',
-    u'\377',                //octal (max three digits)
+    u'\777',                //octal (max three digits)
     u'\77',                //octal
     u'\7',                //octal
     u'\xFF',                //hex (no max)
@@ -1797,7 +1797,7 @@ std::vector<char32_t> char32LiteralConversions
     U'\r',
     U'\t',
     U'\v',
-    U'\377',                //octal (max three digits)
+    U'\777',                //octal (max three digits)
     U'\77',                //octal
     U'\7',                //octal
     U'\xFF',                //hex (no max)
@@ -1822,7 +1822,7 @@ std::vector<wchar_t> wcharLiteralConversions
     L'\r',
     L'\t',
     L'\v',
-    L'\377',                //octal (max three digits)
+    L'\777',                //octal (max three digits)
     L'\77',                //octal
     L'\7',                //octal
     L'\xFF',                //hex (no max)
