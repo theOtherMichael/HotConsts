@@ -75,7 +75,6 @@ Wherever you use Hot Constants, include `HotConsts/HotConsts.h`.  You can then u
 Hot Constants uses `std::cout` to output debug messages, which can be helpful if your constants aren't reloading as expected.  To see them, ensure that you can see the output of the standard C output stream in your application.
 
 ## To-Do
-* Full support for `char` literals
 * Use of true atomics (non-locking) for viable types
 * Support for C++ 11 and C++ 20 projects
 * Ability to disable or redirect debug messages
@@ -85,5 +84,6 @@ Hot Constants uses `std::cout` to output debug messages, which can be helpful if
 
 * If you forget a semicolon (\";\") after a constant assignment, reloading will not only fail for that constant, but the first constant on the following line.
 * If you break a string literal across multiple lines using a backslash (\"\\\") instead of quotes, Hot Constants may incorrectly parse the following line during a reload.  If that line contains an `HC()` macro, it may be skipped during reload.
+* Character literals containing a space (`' '`) are not parsed correctly, and will not reload.
 
 Hot Constants was inspired by Tweakable Constants, a concept discussed in [a post on gamedev.net](https://www.gamedev.net/tutorials/programming/general-and-gameplay-programming/tweakable-constants-r2731/) by Joel Davis, who himself learned it from a [lost thread](https://mollyrocket.com/forums/viewtopic.php?p=3355) by Casey Muratori on MollyRocket.com.
