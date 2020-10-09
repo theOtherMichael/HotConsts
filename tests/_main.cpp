@@ -82,7 +82,11 @@ int main()
 	TEST(convertLongDoubleLiterals);
 
 	TESTHEADER("Other Literal Conversion");
-	//TEST(convertCharLiterals);
+	TEST(convertCharLiterals);
+    TEST(convertChar8Literals);
+    TEST(convertChar16Literals);
+    TEST(convertChar32Literals);
+    TEST(convertWCharLiterals);
 	TEST(convertBoolLiterals);
 
 	TESTHEADER("Bad Integer Literal Handling");
@@ -100,7 +104,7 @@ int main()
 
 	TESTHEADER("Bad Other Literal Handling");
 	TEST(handleBadBoolLiterals);
-	//TEST(handleBadCharLiterals);
+	TEST(handleBadCharLiterals);
 
 	TESTHEADER("Operation Evaluation");
 	TEST(handleModuloWithIntegralOperands);
@@ -147,6 +151,7 @@ int main()
     TEST(chainBinaryExpr_EqPrWithComplexUnaryOps);
     TEST(chainBinaryExpr_DecPrWithComplexUnaryOps);
     TEST(chainBinaryExpr_IncPrWithComplexUnaryOps);
+    TEST(spaceCharacterLiterals);
 
     TESTHEADER("Grouped Expression Evaluation");
     TEST(trivialParentheses);

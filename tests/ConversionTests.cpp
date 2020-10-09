@@ -2,6 +2,8 @@
 #include "_tests.h"
 #include "LiteralSamples.h"
 
+#define RANGEOFTYPE(type) ((1ull << sizeof( type ) * CHAR_BIT) - 1)
+
 /*
 	Tests conversion of literals into values.
 */
@@ -566,9 +568,266 @@ bool convertBoolLiterals()
     }
     return returnVal;
 }
+
 bool convertCharLiterals()
 {
-	return false;
+    bool returnVal = true;
+    
+    try
+    {
+        if (charLiterals.size() == charLiteralConversions.size())
+        {
+            auto conversionIt = charLiteralConversions.begin();
+            for (auto literalIt = charLiterals.begin();
+                 literalIt != charLiterals.end();
+                 ++literalIt)
+            {
+                try
+                {
+                    auto convertedVal = HotConsts::_convertLiteralTo_char(*literalIt);
+                    if (convertedVal != *conversionIt)
+                    {
+                        std::cout << RED << "Char literal conversion is incorrect: " << YELLOW << "\"" << *literalIt
+                        << "\"" << RED << " converts to " << YELLOW << convertedVal << RED << "." << WHITE << std::endl;
+                        returnVal = false;
+                    }
+                    ++conversionIt;
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << RED << "std::out_of_range thrown in test convertCharLiterals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+                catch (std::invalid_argument& e)
+                {
+                    std::cout << RED << "std::invalid_argument thrown in test convertCharLiterals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+            }
+        }
+        else
+        {
+            std::cout << RED << "charLiterals and charLiteralConversions are different sizes." << WHITE << std::endl;
+            returnVal = false;
+        }
+    }
+    catch (std::exception& e)
+    {
+        std::cout << RED << "Unhandled exception caught: " << YELLOW << e.what() << WHITE << std::endl;
+        returnVal = false;
+    }
+    
+    return returnVal;
+}
+bool convertChar8Literals() //c++17
+{
+    bool returnVal = true;
+    
+    try
+    {
+        if (char8Literals.size() == char8LiteralConversions.size())
+        {
+            auto conversionIt = char8LiteralConversions.begin();
+            for (auto literalIt = char8Literals.begin();
+                 literalIt != char8Literals.end();
+                 ++literalIt)
+            {
+                try
+                {
+                    auto convertedVal = HotConsts::_convertLiteralTo_char8(*literalIt);
+                    if (convertedVal != *conversionIt)
+                    {
+                        std::cout << RED << "UTF-8 char literal conversion is incorrect: " << YELLOW << "\"" << *literalIt
+                        << "\"" << RED << " converts to " << YELLOW << convertedVal << RED << "." << WHITE << std::endl;
+                        returnVal = false;
+                    }
+                    ++conversionIt;
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << RED << "std::out_of_range thrown in test convertChar8Literals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+                catch (std::invalid_argument& e)
+                {
+                    std::cout << RED << "std::invalid_argument thrown in test convertChar8Literals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+            }
+        }
+        else
+        {
+            std::cout << RED << "char8Literals and char8LiteralConversions are different sizes." << WHITE << std::endl;
+            returnVal = false;
+        }
+    }
+    catch (std::exception& e)
+    {
+        std::cout << RED << "Unhandled exception caught: " << YELLOW << e.what() << WHITE << std::endl;
+        returnVal = false;
+    }
+    
+    return returnVal;
+}
+bool convertChar16Literals()
+{
+    bool returnVal = true;
+    
+    try
+    {
+        if (char16Literals.size() == char16LiteralConversions.size())
+        {
+            auto conversionIt = char16LiteralConversions.begin();
+            for (auto literalIt = char16Literals.begin();
+                 literalIt != char16Literals.end();
+                 ++literalIt)
+            {
+                try
+                {
+                    auto convertedVal = HotConsts::_convertLiteralTo_char16(*literalIt);
+                    if (convertedVal != *conversionIt)
+                    {
+                        std::cout << RED << "UTF-16 char literal conversion is incorrect: " << YELLOW << "\"" << *literalIt
+                        << "\"" << RED << " converts to " << YELLOW << convertedVal << RED << "." << WHITE << std::endl;
+                        returnVal = false;
+                    }
+                    ++conversionIt;
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << RED << "std::out_of_range thrown in test convertChar16Literals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+                catch (std::invalid_argument& e)
+                {
+                    std::cout << RED << "std::invalid_argument thrown in test convertChar16Literals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+            }
+        }
+        else
+        {
+            std::cout << RED << "char16Literals and char16LiteralConversions are different sizes." << WHITE << std::endl;
+            returnVal = false;
+        }
+    }
+    catch (std::exception& e)
+    {
+        std::cout << RED << "Unhandled exception caught: " << YELLOW << e.what() << WHITE << std::endl;
+        returnVal = false;
+    }
+    
+    return returnVal;
+}
+bool convertChar32Literals()
+{
+    bool returnVal = true;
+    
+    try
+    {
+        if (char32Literals.size() == char32LiteralConversions.size())
+        {
+            auto conversionIt = char32LiteralConversions.begin();
+            for (auto literalIt = char32Literals.begin();
+                 literalIt != char32Literals.end();
+                 ++literalIt)
+            {
+                try
+                {
+                    auto convertedVal = HotConsts::_convertLiteralTo_char32(*literalIt);
+                    if (convertedVal != *conversionIt)
+                    {
+                        std::cout << RED << "UTF-32 char literal conversion is incorrect: " << YELLOW << "\"" << *literalIt
+                        << "\"" << RED << " converts to " << YELLOW << convertedVal << RED << "." << WHITE << std::endl;
+                        returnVal = false;
+                    }
+                    ++conversionIt;
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << RED << "std::out_of_range thrown in test convertChar32Literals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+                catch (std::invalid_argument& e)
+                {
+                    std::cout << RED << "std::invalid_argument thrown in test convertChar32Literals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+            }
+        }
+        else
+        {
+            std::cout << RED << "char32Literals and char32LiteralConversions are different sizes." << WHITE << std::endl;
+            returnVal = false;
+        }
+    }
+    catch (std::exception& e)
+    {
+        std::cout << RED << "Unhandled exception caught: " << YELLOW << e.what() << WHITE << std::endl;
+        returnVal = false;
+    }
+    
+    return returnVal;
+}
+bool convertWCharLiterals()
+{
+    bool returnVal = true;
+    
+    try
+    {
+        if (wcharLiterals.size() == wcharLiteralConversions.size())
+        {
+            auto conversionIt = wcharLiteralConversions.begin();
+            for (auto literalIt = wcharLiterals.begin();
+                 literalIt != wcharLiterals.end();
+                 ++literalIt)
+            {
+                try
+                {
+                    auto convertedVal = HotConsts::_convertLiteralTo_wchar(*literalIt);
+                    if (convertedVal != *conversionIt)
+                    {
+                        std::cout << RED << "Wide char literal conversion is incorrect: " << YELLOW << "\"" << *literalIt
+                        << "\"" << RED << " converts to " << YELLOW << convertedVal << RED << "." << WHITE << std::endl;
+                        returnVal = false;
+                    }
+                    ++conversionIt;
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << RED << "std::out_of_range thrown in test convertWCharLiterals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+                catch (std::invalid_argument& e)
+                {
+                    std::cout << RED << "std::invalid_argument thrown in test convertWCharLiterals().  Literal: "
+                    << YELLOW << "\"" << *literalIt << "\"." << WHITE << std::endl;
+                    returnVal = false;
+                }
+            }
+        }
+        else
+        {
+            std::cout << RED << "wcharLiterals and wcharLiteralConversions are different sizes." << WHITE << std::endl;
+            returnVal = false;
+        }
+    }
+    catch (std::exception& e)
+    {
+        std::cout << RED << "Unhandled exception caught: " << YELLOW << e.what() << WHITE << std::endl;
+        returnVal = false;
+    }
+    
+    return returnVal;
 }
 
 // Bad input ------------------------------------------------------------------
@@ -1223,7 +1482,104 @@ bool handleBadBoolLiterals()
     }
     return returnVal;
 }
+
+#define BADCHARTEST_SHOULDBEOOR(TESTLITERAL, CONVERSIONFN) \
+testLiteral = TESTLITERAL; \
+{ \
+    try \
+    { \
+        HotConsts:: CONVERSIONFN (testLiteral); \
+        std::cout << RED << #CONVERSIONFN "() reports successful conversion of bad literal " << YELLOW << \
+        "\"" << testLiteral << "\"" << RED << "." << WHITE << std::endl; \
+        returnVal = false; \
+    } \
+    catch (std::out_of_range& e) \
+    { \
+    } \
+    catch (std::invalid_argument& e) \
+    { \
+        std::cout << RED << "std::invalid_argument thrown in test " #CONVERSIONFN "().  Literal: " \
+        << YELLOW << "\"" << testLiteral << "\"." << WHITE << std::endl; \
+        returnVal = false; \
+    } \
+}
+#define BADCHARTEST_SHOULDBEINVALIDARG(TESTLITERAL, CONVERSIONFN) \
+testLiteral = TESTLITERAL; \
+{ \
+    try \
+    { \
+        HotConsts:: CONVERSIONFN (testLiteral); \
+        std::cout << RED << #CONVERSIONFN "() reports successful conversion of bad literal " << YELLOW << \
+        "\"" << testLiteral << "\"" << RED << "." << WHITE << std::endl; \
+        returnVal = false; \
+    } \
+    catch (std::out_of_range& e) \
+    { \
+        std::cout << RED << "std::out_of_range thrown in test " #CONVERSIONFN "().  Literal: " \
+        << YELLOW << "\"" << testLiteral << "\"." << WHITE << std::endl; \
+        returnVal = false; \
+    } \
+    catch (std::invalid_argument& e) \
+    { \
+    } \
+}
 bool handleBadCharLiterals()
 {
-	return false;
+    std::string testLiteral;
+    bool returnVal = true;
+    
+    try
+    {
+        // no characters between ''.
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\'", _convertLiteralTo_char);
+        
+        // invalid characters after final '.
+        BADCHARTEST_SHOULDBEINVALIDARG("\'c\'abc", _convertLiteralTo_char); // 'c'abc
+        
+        // missing final '.
+        BADCHARTEST_SHOULDBEINVALIDARG("\'", _convertLiteralTo_char); // '
+        BADCHARTEST_SHOULDBEINVALIDARG("\'c", _convertLiteralTo_char); // 'c
+        
+        // too many characters between '' (multicharacter)
+        BADCHARTEST_SHOULDBEINVALIDARG("\'abc\'", _convertLiteralTo_char); // 'abc'
+        
+        // nonstandard escape sequence
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\\z\'", _convertLiteralTo_char); // '\z'
+        
+        // too many characters after valid escape sequence (multicharacter)
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\\nabc\'", _convertLiteralTo_char); // '\nabc'
+        
+        // octal character limit
+        BADCHARTEST_SHOULDBEOOR("\'\\400\'", _convertLiteralTo_char); // '\400'
+        
+        // hexadecimal character limits
+        BADCHARTEST_SHOULDBEOOR("\'\\x100\'", _convertLiteralTo_char); // '\x100'
+        BADCHARTEST_SHOULDBEOOR("u8\'\\x100\'", _convertLiteralTo_char8); // '\x100'
+        BADCHARTEST_SHOULDBEOOR("u\'\\x10000\'", _convertLiteralTo_char16); // '\x10000'
+        BADCHARTEST_SHOULDBEOOR("U\'\\x100000000\'", _convertLiteralTo_char32); // '\x100000000'
+        // Derive the string representation of the escape character greater than the max of wchar_t
+        char buffer[16];
+        sprintf(buffer, "%llX", RANGEOFTYPE(wchar_t) + 1);
+        BADCHARTEST_SHOULDBEOOR("L\'\\x" + std::string(buffer) + "\'", _convertLiteralTo_wchar);
+        
+        // too few characters in unicode character names
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\\u40\'", _convertLiteralTo_char); // '\u40'
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\\U000040\'", _convertLiteralTo_char); // '\U000040'
+        
+        // extra characters after octal, hex, and unicode esc sequences
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\\377c\'", _convertLiteralTo_char); // '\377c'
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\\0c'", _convertLiteralTo_char); // '\0c'
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\\xFFz\'", _convertLiteralTo_char); // '\xFFz'
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\\u0040z\'", _convertLiteralTo_char); // '\u0040z'
+        BADCHARTEST_SHOULDBEINVALIDARG("\'\\U00000040z\'", _convertLiteralTo_char); // '\U00000040z'
+        
+    }
+    catch (std::exception& e)
+    {
+        std::cout << RED << "Unhandled exception caught during conversion of bad character literal: " <<
+        YELLOW << e.what() << WHITE << std::endl;
+        returnVal = false;
+    }
+    
+    return returnVal;
 }

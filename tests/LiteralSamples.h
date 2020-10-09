@@ -56,6 +56,20 @@ extern std::vector<long double> longDoubleLiteralConversions;
 // Char literals
 extern std::vector<std::string> charLiterals;
 extern std::vector<std::pair<HotConsts::literalType, HotConsts::literalBase>> charLiteralIdentities;
+extern std::vector<char> charLiteralConversions;
+extern std::vector<std::string> char8Literals;
+extern std::vector<std::pair<HotConsts::literalType, HotConsts::literalBase>> char8LiteralIdentities;
+extern std::vector<char> char8LiteralConversions; //TODO: Change type to char8_t in c++20
+extern std::vector<std::string> char16Literals;
+extern std::vector<std::pair<HotConsts::literalType, HotConsts::literalBase>> char16LiteralIdentities;
+extern std::vector<char16_t> char16LiteralConversions;
+extern std::vector<std::string> char32Literals;
+extern std::vector<std::pair<HotConsts::literalType, HotConsts::literalBase>> char32LiteralIdentities;
+extern std::vector<char32_t> char32LiteralConversions;
+extern std::vector<std::string> wcharLiterals;
+extern std::vector<std::pair<HotConsts::literalType, HotConsts::literalBase>> wcharLiteralIdentities;
+extern std::vector<wchar_t> wcharLiteralConversions;
+
 
 // Operators
 extern std::vector<std::string> operatorTokens;

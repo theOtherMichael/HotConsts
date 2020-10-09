@@ -33,11 +33,11 @@ long double		    _convertLiteralTo_longdouble(std::string& token, literalBase ba
 // Char type conversions
 
 char				_convertLiteralTo_char(std::string& token);
-//char8_t			convertLiteralTo_char8(std::string& token); // c++20
+char			    _convertLiteralTo_char8(std::string& token); // c++17 TODO: Change to char8_t in c++20
 char16_t			_convertLiteralTo_char16(std::string& token);
 char32_t			_convertLiteralTo_char32(std::string& token);
 wchar_t			    _convertLiteralTo_wchar(std::string& token);
-int					_convertLiteralTo_multichar(std::string& token);
+//int					_convertLiteralTo_multichar(std::string& token);
 
 // Bool conversion
 

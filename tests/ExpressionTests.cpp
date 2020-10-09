@@ -91,6 +91,19 @@ bool chainBinaryExpr_IncPrWithComplexUnaryOps()
 	auto evaluatedExpression = -~1-+~2*+~3;
 	return expressionTest("-~1-+~2*+~3", evaluatedExpression);
 }
+bool spaceCharacterLiterals()
+{
+    char charExpr = ' ';
+    char char8Expr = u8' '; // c++17 TODO: change to char8_t in c++20
+    char16_t char16Expr = u' ';
+    char32_t char32Expr = U' ';
+    wchar_t wcharExpr = L' ';
+    return expressionTest("' '", charExpr) &&
+           expressionTest("u8' '", char8Expr) &&
+           expressionTest("u' '", char16Expr) &&
+           expressionTest("U' '", char32Expr) &&
+           expressionTest("L' '", wcharExpr);
+}
 
 // Grouped Expression Evaluation ----------------------------------------------
 

@@ -565,6 +565,8 @@ std::pair<bool, T> _evalArithmeticExpression(std::string& strExpr)
                 // Appears to be a literal, so treat it like one.
                 // Conversion failure will catch it if it's not.
                 awaitingLiteral = false;
+                
+                // TODO: Handle ' ' parsing here (space is delimiter, so requires special handling).
 
                 currentLeaf = _newETLeaf(token);
                 if (!currentLeaf)

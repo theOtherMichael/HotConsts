@@ -1449,231 +1449,386 @@ std::vector<long double> longDoubleLiteralConversions
 	0x7.FP-1L
 };
 
-
 std::vector<std::string> charLiterals
 {
-	// Trivial characters
+    // Trivial character
+    "'c'",
 
-	"'c'",
-	//"u8'c'", //c++20
-	"u'c'",
-	"U'c'",
-	"L'c'",
+    // Escape sequences
+    "'\\''",
+    "'\\\"'",
+    "'\\?'",
+    "'\\\\'",
+    "'\\a'",
+    "'\\b'",
+    "'\\f'",
+    "'\\n'",
+    "'\\r'",
+    "'\\t'",
+    "'\\v'",
+    "'\\377'",                //octal (max three digits)
+    "'\\77'",                //octal
+    "'\\7'",                //octal
+    "'\\xFF'",                //hex (no max)
+    "'\\xF'",                //hex
+    "'\\u0040'",            //unicode
+    "'\\U00000040'"        //unicode
+};
+std::vector<std::string> char8Literals //c++17
+{
+    // Trivial character
+    "u8'c'",
 
-	// Escape sequences
+    // Escape sequences
+    "u8'\\''",
+    "u8'\\\"'",
+    "u8'\\?'",
+    "u8'\\\\'",
+    "u8'\\a'",
+    "u8'\\b'",
+    "u8'\\f'",
+    "u8'\\n'",
+    "u8'\\r'",
+    "u8'\\t'",
+    "u8'\\v'",
+    "u8'\\377'",                //octal (max three digits)
+    "u8'\\77'",                //octal
+    "u8'\\7'",                //octal
+    "u8'\\xFF'",                //hex (no max)
+    "u8'\\xF'",                //hex
+    "u8'\\u0040'",            //unicode
+    "u8'\\U00000040'"        //unicode
+};
+std::vector<std::string> char16Literals
+{
+    // Trivial character
+    "u'c'",
 
-	// char
-	"'\\''",
-	"'\\\"'",
-	"'\\?'",
-	"'\\\\'",
-	"'\\a'",
-	"'\\b'",
-	"'\\f'",
-	"'\\n'",
-	"'\\r'",
-	"'\\t'",
-	"'\\v'",
-	"'\\377'",				//octal (max three digits)
-	"'\\77'",				//octal
-	"'\\7'",				//octal
-	"'\\xFF'",				//hex (no max)
-	"'\\xF'",				//hex
-	"'\\u0040'",			//unicode
-	"'\\U00000040'",		//unicode
-					
-	// utf-8 (c++20)
-	//"u8'\\''",
-	//"u8'\\\"'",
-	//"u8'\\?'",
-	//"u8'\\\\'",
-	//"u8'\\a'",
-	//"u8'\\b'",
-	//"u8'\\f'",
-	//"u8'\\n'",
-	//"u8'\\r'",
-	//"u8'\\t'",
-	//"u8'\\v'",
-	//"u8'\\377'",			//octal (max three digits)
-	//"u8'\\77'",			//octal
-	//"u8'\\7'",			//octal
-	//"u8'\\xFF'",			//hex (no max)
-	//"u8'\\xF'",			//hex
-	//"u8'\\u0040'",		//unicode
-	//"u8'\\U00000040'",	//unicode
+    // Escape sequences
+    "u'\\''",
+    "u'\\\"'",
+    "u'\\?'",
+    "u'\\\\'",
+    "u'\\a'",
+    "u'\\b'",
+    "u'\\f'",
+    "u'\\n'",
+    "u'\\r'",
+    "u'\\t'",
+    "u'\\v'",
+    "u'\\377'",                //octal (max three digits)
+    "u'\\77'",                //octal
+    "u'\\7'",                //octal
+    "u'\\xFF'",                //hex (no max)
+    "u'\\xF'",                //hex
+    "u'\\u0040'",            //unicode
+    "u'\\U00000040'"        //unicode
 
-	// utf-16
-	"u'\\''",
-	"u'\\\"'",
-	"u'\\?'",
-	"u'\\\\'",
-	"u'\\a'",
-	"u'\\b'",
-	"u'\\f'",
-	"u'\\n'",
-	"u'\\r'",
-	"u'\\t'",
-	"u'\\v'",
-	"u'\\377'",			//octal (max three digits)
-	"u'\\77'",			//octal
-	"u'\\7'",			//octal
-	"u'\\xFF'",			//hex (no max)
-	"u'\\xF'",			//hex
-	"u'\\u0040'",		//unicode
-	"u'\\U00000040'",	//unicode
+};
+std::vector<std::string> char32Literals
+{
+    // Trivial character
+    "U'c'",
 
-	// utf-32
-	"U'\\''",
-	"U'\\\"'",
-	"U'\\?'",
-	"U'\\\\'",
-	"U'\\a'",
-	"U'\\b'",
-	"U'\\f'",
-	"U'\\n'",
-	"U'\\r'",
-	"U'\\t'",
-	"U'\\v'",
-	"U'\\377'",			//octal (max three digits)
-	"U'\\77'",			//octal
-	"U'\\7'",			//octal
-	"U'\\xFF'",			//hex (no max)
-	"U'\\xF'",			//hex
-	"U'\\u0040'",		//unicode
-	"U'\\U00000040'",	//unicode
+    // Escape sequences
+    "U'\\''",
+    "U'\\\"'",
+    "U'\\?'",
+    "U'\\\\'",
+    "U'\\a'",
+    "U'\\b'",
+    "U'\\f'",
+    "U'\\n'",
+    "U'\\r'",
+    "U'\\t'",
+    "U'\\v'",
+    "U'\\377'",                //octal (max three digits)
+    "U'\\77'",                //octal
+    "U'\\7'",                //octal
+    "U'\\xFF'",                //hex (no max)
+    "U'\\xF'",                //hex
+    "U'\\u0040'",            //unicode
+    "U'\\U00000040'"        //unicode
+};
+std::vector<std::string> wcharLiterals
+{
+    // Trivial character
+    "L'c'",
 
-	// wide char
-	"L'\\''",
-	"L'\\\"'",
-	"L'\\?'",
-	"L'\\\\'",
-	"L'\\a'",
-	"L'\\b'",
-	"L'\\f'",
-	"L'\\n'",
-	"L'\\r'",
-	"L'\\t'",
-	"L'\\v'",
-	"L'\\377'",			//octal (max three digits)
-	"L'\\77'",			//octal
-	"L'\\7'",			//octal
-	"L'\\xFF'",			//hex (no max)
-	"L'\\xF'",			//hex
-	"L'\\u0040'",		//unicode
-	"L'\\U00000040'"	//unicode
+    // Escape sequences
+    "L'\\''",
+    "L'\\\"'",
+    "L'\\?'",
+    "L'\\\\'",
+    "L'\\a'",
+    "L'\\b'",
+    "L'\\f'",
+    "L'\\n'",
+    "L'\\r'",
+    "L'\\t'",
+    "L'\\v'",
+    "L'\\377'",                //octal (max three digits)
+    "L'\\77'",                //octal
+    "L'\\7'",                //octal
+    "L'\\xFF'",                //hex (no max)
+    "L'\\xF'",                //hex
+    "L'\\u0040'",            //unicode
+    "L'\\U00000040'"        //unicode
 };
 
 std::vector<std::pair<literalType, literalBase>> charLiteralIdentities
 {
-	// Trivial characters
+    // Trivial character
+    std::pair(literalType::lit_char, literalBase::notapplicable),   // 'c'
 
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'c'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'c'", //c++20
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'c'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'c'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'c'",
+    // Escape sequences
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\''
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\"'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\?'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\\'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\a'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\b'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\f'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\n'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\r'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\t'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\v'
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\377'            //octal (max three digits)
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\77'            //octal
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\7'            //octal
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\xFF'            //hex (no max)
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\xF'            //hex
+    std::pair(literalType::lit_char, literalBase::notapplicable), // '\u0040'        //unicode
+    std::pair(literalType::lit_char, literalBase::notapplicable)  // '\U00000040'    //unicode
+
+};
+std::vector<std::pair<literalType, literalBase>> char8LiteralIdentities //c++17
+{
+    // Trivial character
+    std::pair(literalType::lit_char8, literalBase::notapplicable),  // u8'c'
+
+    // Escape sequences
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\''
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\"'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\?'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\\'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\a'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\b'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\f'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\n'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\r'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\t'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\v'
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\377'          //octal (max three digits)
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\77'           //octal
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\7'            //octal
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\xFF'          //hex (no max)
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\xF'           //hex
+    std::pair(literalType::lit_char8, literalBase::notapplicable), // u8'\u0040'        //unicode
+    std::pair(literalType::lit_char8, literalBase::notapplicable)  // u8'\U00000040'    //unicode
+
+};
+std::vector<std::pair<literalType, literalBase>> char16LiteralIdentities
+{
+    // Trivial character
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'c'
+
+    // Escape sequences
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\''
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\"'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\?'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\\'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\a'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\b'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\f'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\n'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\r'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\t'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\v'
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\377'       //octal (max three digits)
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\77'        //octal
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\7'         //octal
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\xFF'       //hex (no max)
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\xF'        //hex
+    std::pair(literalType::lit_char16, literalBase::notapplicable), // u'\u0040'     //unicode
+    std::pair(literalType::lit_char16, literalBase::notapplicable)  // u'\U00000040' //unicode
+
+};
+std::vector<std::pair<literalType, literalBase>> char32LiteralIdentities
+{
+    // Trivial character
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'c'
+
+    // Escape sequences
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\''
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\"'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\?'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\\'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\a'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\b'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\f'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\n'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\r'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\t'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\v'
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\377'          //octal (max three digits)
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\77'           //octal
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\7'            //octal
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\xFF'          //hex (no max)
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\xF'           //hex
+    std::pair(literalType::lit_char32, literalBase::notapplicable), // U'\u0040'        //unicode
+    std::pair(literalType::lit_char32, literalBase::notapplicable)  // U'\U00000040'    //unicode
+};
+std::vector<std::pair<literalType, literalBase>> wcharLiteralIdentities
+{
+	// Trivial character
+    std::pair(literalType::lit_wchar, literalBase::notapplicable),  // L'c'
 
 	// Escape sequences
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\''
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\"'
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\?'
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\\'
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\a'
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\b'
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\f'
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\n'
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\r'
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\t'
+	std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\v'
+    std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\377'      	//octal (max three digits)
+    std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\77'       	//octal
+    std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\7'        	//octal
+    std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\xFF'      	//hex (no max)
+    std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\xF'       	//hex
+    std::pair(literalType::lit_wchar, literalBase::notapplicable), // L'\u0040'    	//unicode
+    std::pair(literalType::lit_wchar, literalBase::notapplicable)  // L'\U00000040'	//unicode
+};
 
-	// char
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\''",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\\"'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\?'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\\\'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\a'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\b'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\f'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\n'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\r'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\t'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\v'",
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\377'",			//octal (max three digits)
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\77'",			//octal
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\7'",			//octal
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\xFF'",			//hex (no max)
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\xF'",			//hex
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\u0040'",		//unicode
-	std::pair(literalType::lit_char, literalBase::notapplicable), // "'\\U00000040'",	//unicode
+std::vector<char> charLiteralConversions
+{
+    // Trivial character
+    'c',
 
-	// utf-8 (c++20)
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\''",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\\"'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\?'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\\\'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\a'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\b'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\f'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\n'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\r'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\t'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\v'",
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\377'",		//octal (max three digits)
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\77'",			//octal
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\7'",			//octal
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\xFF'",		//hex (no max)
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\xF'",			//hex
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\u0040'",		//unicode
-	//std::pair(literalType::lit_char8, literalBase::notapplicable), // "u8'\\U00000040'",	//unicode
+    // Escape sequences
+    '\'',
+    '\"',
+    '\?',
+    '\\',
+    '\a',
+    '\b',
+    '\f',
+    '\n',
+    '\r',
+    '\t',
+    '\v',
+    '\377',                //octal (max three digits)
+    '\77',                //octal
+    '\7',                //octal
+    '\xFF',                //hex (no max)
+    '\xF',                //hex
+    '\u0040',            //unicode
+    '\U00000040'        //unicode
+};
+std::vector<char> char8LiteralConversions //c++17 TODO: Change type to char8_t in c++20
+{
+    // Trivial character
+    u8'c',
 
-	// utf-16
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\''",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\\"'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\?'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\\\'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\a'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\b'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\f'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\n'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\r'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\t'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\v'",
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\377'",			//octal (max three digits)
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\77'",			//octal
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\7'",			//octal
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\xFF'",			//hex (no max)
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\xF'",			//hex
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\u0040'",		//unicode
-	std::pair(literalType::lit_char16, literalBase::notapplicable), // "u'\\U00000040'",	//unicode
+    // Escape sequences
+    u8'\'',
+    u8'\"',
+    u8'\?',
+    u8'\\',
+    u8'\a',
+    u8'\b',
+    u8'\f',
+    u8'\n',
+    u8'\r',
+    u8'\t',
+    u8'\v',
+    u8'\377',                //octal (max three digits)
+    u8'\77',                //octal
+    u8'\7',                //octal
+    u8'\xFF',                //hex (no max)
+    u8'\xF',                //hex
+    u8'\u0040',            //unicode
+    u8'\U00000040'        //unicode
+};
+std::vector<char16_t> char16LiteralConversions
+{
+    // Trivial character
+    u'c',
 
-	// utf-32
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\''",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\\"'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\?'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\\\'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\a'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\b'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\f'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\n'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\r'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\t'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\v'",
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\377'",			//octal (max three digits)
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\77'",			//octal
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\7'",			//octal
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\xFF'",			//hex (no max)
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\xF'",			//hex
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\u0040'",		//unicode
-	std::pair(literalType::lit_char32, literalBase::notapplicable), // "U'\\U00000040'",	//unicode
+    // Escape sequences
+    u'\'',
+    u'\"',
+    u'\?',
+    u'\\',
+    u'\a',
+    u'\b',
+    u'\f',
+    u'\n',
+    u'\r',
+    u'\t',
+    u'\v',
+    u'\377',                //octal (max three digits)
+    u'\77',                //octal
+    u'\7',                //octal
+    u'\xFF',                //hex (no max)
+    u'\xF',                //hex
+    u'\u0040',            //unicode
+    u'\U00000040'        //unicode
+};
+std::vector<char32_t> char32LiteralConversions
+{
+    // Trivial character
+    U'c',
 
-	// wide char
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\''",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\\"'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\?'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\\\'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\a'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\b'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\f'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\n'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\r'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\t'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\v'",
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\377'",			//octal (max three digits)
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\77'",			//octal
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\7'",				//octal
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\xFF'",			//hex (no max)
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\xF'",			//hex
-	std::pair(literalType::lit_wchar, literalBase::notapplicable), // "L'\\u0040'",			//unicode
-	std::pair(literalType::lit_wchar, literalBase::notapplicable)  // "L'\\U00000040'"		//unicode
+    // Escape sequences
+    U'\'',
+    U'\"',
+    U'\?',
+    U'\\',
+    U'\a',
+    U'\b',
+    U'\f',
+    U'\n',
+    U'\r',
+    U'\t',
+    U'\v',
+    U'\377',                //octal (max three digits)
+    U'\77',                //octal
+    U'\7',                //octal
+    U'\xFF',                //hex (no max)
+    U'\xF',                //hex
+    U'\u0040',            //unicode
+    U'\U00000040'        //unicode
+};
+std::vector<wchar_t> wcharLiteralConversions
+{
+    // Trivial character
+    L'c',
+
+    // Escape sequences
+    L'\'',
+    L'\"',
+    L'\?',
+    L'\\',
+    L'\a',
+    L'\b',
+    L'\f',
+    L'\n',
+    L'\r',
+    L'\t',
+    L'\v',
+    L'\377',                //octal (max three digits)
+    L'\77',                //octal
+    L'\7',                //octal
+    L'\xFF',                //hex (no max)
+    L'\xF',                //hex
+    L'\u0040',            //unicode
+    L'\U00000040'        //unicode
 };
 
 

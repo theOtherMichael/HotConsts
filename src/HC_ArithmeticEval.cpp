@@ -44,7 +44,6 @@ ETNode* _newETLeaf(std::string& lit)
                 {
                     int val = _convertLiteralTo_int(lit, base);
                     returnVal = new ETLeaf<int>(literalType::lit_int, val);
-                    break;
                 }
                 catch (std::out_of_range& e)
                 {
@@ -53,7 +52,6 @@ ETNode* _newETLeaf(std::string& lit)
                     {
                         long val = _convertLiteralTo_long(lit, base);
                         returnVal = new ETLeaf<long>(literalType::lit_long, val);
-                        break;
                     }
                     catch (std::out_of_range& e)
                     {
@@ -62,7 +60,6 @@ ETNode* _newETLeaf(std::string& lit)
                         {
                             long long val = _convertLiteralTo_longlong(lit, base);
                             returnVal = new ETLeaf<long long>(literalType::lit_longlong, val);
-                            break;
                         }
                         catch (std::out_of_range& e)
                         {
@@ -73,13 +70,13 @@ ETNode* _newETLeaf(std::string& lit)
                     }
                 }
             }
+                break;
             case literalType::lit_long:
             {
                 try
                 {
                     long val = _convertLiteralTo_long(lit, base);
                     returnVal = new ETLeaf<long>(literalType::lit_long, val);
-                    break;
                 }
                 catch (std::out_of_range& e)
                 {
@@ -88,7 +85,6 @@ ETNode* _newETLeaf(std::string& lit)
                     {
                         long long val = _convertLiteralTo_longlong(lit, base);
                         returnVal = new ETLeaf<long long>(literalType::lit_longlong, val);
-                        break;
                     }
                     catch (std::out_of_range& e)
                     {
@@ -98,13 +94,13 @@ ETNode* _newETLeaf(std::string& lit)
                     }
                 }
             }
+                break;
             case literalType::lit_longlong:
             {
                 try
                 {
                     long long val = _convertLiteralTo_longlong(lit, base);
                     returnVal = new ETLeaf<long long>(literalType::lit_longlong, val);
-                    break;
                 }
                 catch (std::out_of_range& e)
                 {
@@ -113,13 +109,13 @@ ETNode* _newETLeaf(std::string& lit)
                         "\" is too large for any signed integral type." << std::endl;
                 }
             }
+                break;
             case literalType::lit_uint:
             {
                 try
                 {
                     unsigned int val = _convertLiteralTo_uint(lit, base);
                     returnVal = new ETLeaf<unsigned int>(literalType::lit_uint, val);
-                    break;
                 }
                 catch (std::out_of_range& e)
                 {
@@ -128,7 +124,6 @@ ETNode* _newETLeaf(std::string& lit)
                     {
                         unsigned long val = _convertLiteralTo_ulong(lit, base);
                         returnVal = new ETLeaf<unsigned long>(literalType::lit_ulong, val);
-                        break;
                     }
                     catch (std::out_of_range& e)
                     {
@@ -137,7 +132,6 @@ ETNode* _newETLeaf(std::string& lit)
                         {
                             unsigned long long val = _convertLiteralTo_ulonglong(lit, base);
                             returnVal = new ETLeaf<unsigned long long>(literalType::lit_ulonglong, val);
-                            break;
                         }
                         catch (std::out_of_range& e)
                         {
@@ -148,13 +142,14 @@ ETNode* _newETLeaf(std::string& lit)
                     }
                 }
             }
+                break;
             case literalType::lit_ulong:
             {
                 try
                 {
                     unsigned long val = _convertLiteralTo_ulong(lit, base);
                     returnVal = new ETLeaf<unsigned long>(literalType::lit_ulong, val);
-                    break;
+                    
                 }
                 catch (std::out_of_range& e)
                 {
@@ -163,7 +158,6 @@ ETNode* _newETLeaf(std::string& lit)
                     {
                         unsigned long long val = _convertLiteralTo_ulonglong(lit, base);
                         returnVal = new ETLeaf<unsigned long long>(literalType::lit_ulonglong, val);
-                        break;
                     }
                     catch (std::out_of_range& e)
                     {
@@ -173,13 +167,13 @@ ETNode* _newETLeaf(std::string& lit)
                     }
                 }
             }
+                break;
             case literalType::lit_ulonglong:
             {
                 try
                 {
                     unsigned long long val = _convertLiteralTo_ulonglong(lit, base);
                     returnVal = new ETLeaf<unsigned long long>(literalType::lit_ulonglong, val);
-                    break;
                 }
                 catch (std::out_of_range& e)
                 {
@@ -188,7 +182,7 @@ ETNode* _newETLeaf(std::string& lit)
                         "\" is too large for any unsigned integral type." << std::endl;
                 }
             }
-                
+                break;
                 
                 
             case literalType::lit_double:
@@ -197,7 +191,6 @@ ETNode* _newETLeaf(std::string& lit)
                 {
                     double val = _convertLiteralTo_double(lit, base);
                     returnVal = new ETLeaf<double>(literalType::lit_double, val);
-                    break;
                 }
                 catch (std::out_of_range& e)
                 {
@@ -206,13 +199,13 @@ ETNode* _newETLeaf(std::string& lit)
                         "\" falls out of range for type 'double'." << std::endl;
                 }
             }
+                break;
             case literalType::lit_float:
             {
                 try
                 {
                     float val = _convertLiteralTo_float(lit, base);
                     returnVal = new ETLeaf<float>(literalType::lit_float, val);
-                    break;
                 }
                 catch (std::out_of_range& e)
                 {
@@ -221,13 +214,13 @@ ETNode* _newETLeaf(std::string& lit)
                         "\" falls out of range for type 'float'." << std::endl;
                 }
             }
+                break;
             case literalType::lit_longdouble:
             {
                 try
                 {
                     long double val = _convertLiteralTo_longdouble(lit, base);
                     returnVal = new ETLeaf<long double>(literalType::lit_longdouble, val);
-                    break;
                 }
                 catch (std::out_of_range& e)
                 {
@@ -236,33 +229,79 @@ ETNode* _newETLeaf(std::string& lit)
                         "\" falls out of range for type 'long double'." << std::endl;
                 }
             }
-                
+                break;
                 
                 
             case literalType::lit_char:
             {
-                char val = _convertLiteralTo_char(lit);
-                returnVal = new ETLeaf<char>(literalType::lit_char, val);
-                break;
+                try
+                {
+                    char val = _convertLiteralTo_char(lit);
+                    returnVal = new ETLeaf<char>(literalType::lit_char, val);
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
+                        "\" falls out of range for type 'char'." << std::endl;
+                }
             }
+                break;
+            case literalType::lit_char8: //c++17
+            {
+                try
+                {
+                    char val = _convertLiteralTo_char(lit);
+                    returnVal = new ETLeaf<char>(literalType::lit_char8, val); //TODO: Change to char8_t in c++20
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
+                        "\" falls out of range for type 'char'." << std::endl;
+                }
+            }
+                break;
             case literalType::lit_char16:
             {
-                char16_t val = _convertLiteralTo_char16(lit);
-                returnVal = new ETLeaf<char16_t>(literalType::lit_char16, val);
-                break;
+                try
+                {
+                    char16_t val = _convertLiteralTo_char16(lit);
+                    returnVal = new ETLeaf<char16_t>(literalType::lit_char16, val);
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
+                        "\" falls out of range for type 'char16_t'." << std::endl;
+                }
             }
+                break;
             case literalType::lit_char32:
             {
-                char32_t val = _convertLiteralTo_char32(lit);
-                returnVal = new ETLeaf<char32_t>(literalType::lit_char32, val);
-                break;
+                try
+                {
+                    char32_t val = _convertLiteralTo_char32(lit);
+                    returnVal = new ETLeaf<char32_t>(literalType::lit_char32, val);
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
+                        "\" falls out of range for type 'char32_t'." << std::endl;
+                }
             }
+                break;
             case literalType::lit_wchar:
             {
-                wchar_t val = _convertLiteralTo_wchar(lit);
-                returnVal = new ETLeaf<wchar_t>(literalType::lit_wchar, val);
-                break;
+                try
+                {
+                    wchar_t val = _convertLiteralTo_wchar(lit);
+                    returnVal = new ETLeaf<wchar_t>(literalType::lit_wchar, val);
+                }
+                catch (std::out_of_range& e)
+                {
+                    std::cout << "Hot Constants:  Conversion failure: Escape sequence in \"" << lit <<
+                        "\" falls out of range for type 'wchar_t'." << std::endl;
+                }
             }
+                break;
                 
                 
                 
@@ -270,18 +309,18 @@ ETNode* _newETLeaf(std::string& lit)
             {
                 bool val = _convertLiteralTo_bool(lit);
                 returnVal = new ETLeaf<bool>(literalType::lit_bool, val);
-                break;
             }
+                break;
                 
             case literalType::none:
             {
                 std::cout << "Hot Constants:  _newETLeaf() was passed a token which didn't contain an identifiable literal.  "
                 "Token: \"" << lit << "\"" << std::endl;
-                break;
             }
+                break;
         }
     }
-    catch (std::invalid_argument& e)
+    catch (std::invalid_argument& e) // TODO: Fix this error message, which is trash.
     {
         // Handle a bad literal.
         std::cout << "Hot Constants:  _newETLeaf() was passed a token which was identifed as a literal but was identified"
@@ -401,8 +440,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(int, char);
             break;
-        //case literalType::lit_char8: //c++20
-        //    VALID_OPERATION(int, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(int, char); // TODO: change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(int, char16_t);
@@ -456,8 +495,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(long, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(long, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(long, char); //TODO: change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(long, char16_t);
@@ -511,8 +550,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(long long, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(long long, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(long long, char); //TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(long long, char16_t);
@@ -566,8 +605,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(unsigned int, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(unsigned int, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(unsigned int, char); //TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(unsigned int, char16_t);
@@ -621,8 +660,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(unsigned long, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(unsigned long, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(unsigned long, char); //TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(unsigned long, char16_t);
@@ -676,8 +715,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(unsigned long long, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(unsigned long long, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(unsigned long long, char); //TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(unsigned long long, char16_t);
@@ -731,8 +770,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(double, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(double, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(double, char); //TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(double, char16_t);
@@ -786,8 +825,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(float, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(float, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(float, char); //TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(float, char16_t);
@@ -841,8 +880,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(long double, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(long double, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(long double, char); //TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(long double, char16_t);
@@ -896,8 +935,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(bool, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(bool, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(bool, char); //TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(bool, char16_t);
@@ -951,8 +990,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(char, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(char, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(char, char); //TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(char, char16_t);
@@ -969,61 +1008,61 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         }
         break;
     }
-    //case literalType::lit_char8: //c++20
-    //{
-    //    switch (op->rchild->m_type)
-    //    {
-    //    case literalType::lit_int:
-    //        VALID_OPERATION(char8_t, int);
-    //        break;
-    //    case literalType::lit_long:
-    //        VALID_OPERATION(char8_t, long);
-    //        break;
-    //    case literalType::lit_longlong:
-    //        VALID_OPERATION(char8_t, long long);
-    //        break;
-    //    case literalType::lit_uint:
-    //        VALID_OPERATION(char8_t, unsigned int);
-    //        break;
-    //    case literalType::lit_ulong:
-    //        VALID_OPERATION(char8_t, unsigned long);
-    //        break;
-    //    case literalType::lit_ulonglong:
-    //        VALID_OPERATION(char8_t, unsigned long long);
-    //        break;
-    //    case literalType::lit_double:
-    //        VALID_OPERATION(char8_t, double);
-    //        break;
-    //    case literalType::lit_float:
-    //        VALID_OPERATION(char8_t, float);
-    //        break;
-    //    case literalType::lit_longdouble:
-    //        VALID_OPERATION(char8_t, long double);
-    //        break;
-    //    case literalType::lit_bool:
-    //        VALID_OPERATION(char8_t, bool);
-    //        break;
-    //    case literalType::lit_char:
-    //        VALID_OPERATION(char8_t, char);
-    //        break;
-    //        //case literalType::lit_char8: //c++20
-    //        //    VALID_OPERATION(char8_t, char8_t);
-    //        break;
-    //    case literalType::lit_char8:
-    //        VALID_OPERATION(char8_t, char8_t);
-    //        break;
-    //    case literalType::lit_char32:
-    //        VALID_OPERATION(char8_t, char32_t);
-    //        break;
-    //    case literalType::lit_wchar:
-    //        VALID_OPERATION(char8_t, wchar_t);
-    //        break;
-    //    default:
-    //        INVALID_OPERATION;
-    //        break;
-    //    }
-    //    break;
-    //}
+    case literalType::lit_char8: //c++17
+    {
+        switch (op->rchild->litType) // TODO: Change all the LHS to char8_t in c++20
+        {
+        case literalType::lit_int:
+            VALID_OPERATION(char, int);
+            break;
+        case literalType::lit_long:
+            VALID_OPERATION(char, long);
+            break;
+        case literalType::lit_longlong:
+            VALID_OPERATION(char, long long);
+            break;
+        case literalType::lit_uint:
+            VALID_OPERATION(char, unsigned int);
+            break;
+        case literalType::lit_ulong:
+            VALID_OPERATION(char, unsigned long);
+            break;
+        case literalType::lit_ulonglong:
+            VALID_OPERATION(char, unsigned long long);
+            break;
+        case literalType::lit_double:
+            VALID_OPERATION(char, double);
+            break;
+        case literalType::lit_float:
+            VALID_OPERATION(char, float);
+            break;
+        case literalType::lit_longdouble:
+            VALID_OPERATION(char, long double);
+            break;
+        case literalType::lit_bool:
+            VALID_OPERATION(char, bool);
+            break;
+        case literalType::lit_char:
+            VALID_OPERATION(char, char);
+            break;
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(char, char); //TODO: Change RHS to char8_t in c++20
+            break;
+        case literalType::lit_char16:
+            VALID_OPERATION(char, char16_t);
+            break;
+        case literalType::lit_char32:
+            VALID_OPERATION(char, char32_t);
+            break;
+        case literalType::lit_wchar:
+            VALID_OPERATION(char, wchar_t);
+            break;
+        default:
+            INVALID_OPERATION;
+            break;
+        }
+        break;
+    }
     case literalType::lit_char16:
     {
         switch (op->rchild->litType)
@@ -1061,8 +1100,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(char16_t, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(char16_t, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(char16_t, char); // TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(char16_t, char16_t);
@@ -1116,8 +1155,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(char32_t, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(char32_t, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(char32_t, char); // TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(char32_t, char16_t);
@@ -1171,8 +1210,8 @@ ETNode* _evalAndPopETOperator(ETOperator* op)
         case literalType::lit_char:
             VALID_OPERATION(wchar_t, char);
             break;
-            //case literalType::lit_char8: //c++20
-            //    VALID_OPERATION(wchar_t, char8_t);
+        case literalType::lit_char8: //c++17
+            VALID_OPERATION(wchar_t, char); // TODO: Change to char8_t in c++20
             break;
         case literalType::lit_char16:
             VALID_OPERATION(wchar_t, char16_t);
@@ -1264,9 +1303,9 @@ ETNode* _applyUnaryOpAndPopETLeaf(ETNode* leaf, unaryOperationType op)
 	case literalType::lit_char:
 		VALID_UNARY_OPERATION(char);
 		break;
-		//case literalType::lit_char8: //c++20
-		//  VALID_UNARY_OPERATION(char8_t);
-		//	break;
+    case literalType::lit_char8: //c++17
+        VALID_UNARY_OPERATION(char); // TODO: Change to char8_t in c++20
+        break;
 	case literalType::lit_char16:
 		VALID_UNARY_OPERATION(char16_t);
 		break;

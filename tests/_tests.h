@@ -31,7 +31,6 @@ bool identifyLongDoubleLiterals();
 
 bool identifyBoolLiterals();
 bool identifyCharLiterals();
-//bool identifyStringLiterals();
 bool identifyOperators();
 bool identifyUnaryOperators();
 
@@ -51,6 +50,10 @@ bool convertFloatLiterals();
 bool convertLongDoubleLiterals();
 
 bool convertCharLiterals();
+bool convertChar8Literals();
+bool convertChar16Literals();
+bool convertChar32Literals();
+bool convertWCharLiterals();
 bool convertBoolLiterals();
 
 // Handle Literal Conversion Failure
@@ -118,6 +121,7 @@ bool chainBinaryExpr_IncPrecedenceWithUnaryOps();
 bool chainBinaryExpr_EqPrWithComplexUnaryOps();
 bool chainBinaryExpr_DecPrWithComplexUnaryOps();
 bool chainBinaryExpr_IncPrWithComplexUnaryOps();
+bool spaceCharacterLiterals();
 
 // Grouped Expression Evaluation
 bool trivialParentheses();

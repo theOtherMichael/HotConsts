@@ -24,7 +24,7 @@ enum class literalType
     lit_bool,
 
     lit_char,
-    //lit_char8, //c++20
+    lit_char8, //c++17
     lit_char16,
     lit_char32,
     lit_wchar
