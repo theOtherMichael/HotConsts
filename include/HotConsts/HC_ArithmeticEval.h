@@ -144,8 +144,8 @@ T _castETLeaf(ETNode* leaf)
 		    if (returnVal != dynamic_cast<ETLeaf<char>*>(leaf)->m_value)
 		    {
                 std::cout << "Hot Constants:  Warning: Data loss detected reloading"
-                    " constant value \"" << dynamic_cast<ETLeaf<char>*>(leaf)->m_value <<
-                    "\".  Is your constant type wide enough for your value?" << std::endl;
+                    " constant value \"'" << dynamic_cast<ETLeaf<char>*>(leaf)->m_value <<
+                    "'\".  Is your constant type wide enough for your value?" << std::endl;
 		    }
 		    break;
 	    case literalType::lit_char8: // c++17
@@ -153,8 +153,8 @@ T _castETLeaf(ETNode* leaf)
 		    if (returnVal != dynamic_cast<ETLeaf<char>*>(leaf)->m_value)
 		    {
                 std::cout << "Hot Constants:  Warning: Data loss detected reloading"
-                    " constant value \"" << dynamic_cast<ETLeaf<char>*>(leaf)->m_value <<
-                    "\".  Is your constant type wide enough for your value?" << std::endl;
+                    " constant value \"u8'" << (int_fast8_t)dynamic_cast<ETLeaf<char>*>(leaf)->m_value <<
+                    "'\".  Is your constant type wide enough for your value?" << std::endl;
 		    }
 		    break;
 	    case literalType::lit_char16:
@@ -162,8 +162,9 @@ T _castETLeaf(ETNode* leaf)
 		    if (returnVal != dynamic_cast<ETLeaf<char16_t>*>(leaf)->m_value)
 		    {
                 std::cout << "Hot Constants:  Warning: Data loss detected reloading"
-                    " constant value \"" << dynamic_cast<ETLeaf<char16_t>*>(leaf)->m_value <<
-                    "\".  Is your constant type wide enough for your value?" << std::endl;
+                    " constant value \"u'" << (char)dynamic_cast<ETLeaf<char16_t>*>(leaf)->m_value <<
+                    "'\" (value = " << (int_fast16_t)dynamic_cast<ETLeaf<char16_t>*>(leaf)->m_value <<
+                    ").  Is your constant type wide enough for your value?" << std::endl;
 		    }
 		    break;
 	    case literalType::lit_char32:
@@ -171,8 +172,9 @@ T _castETLeaf(ETNode* leaf)
 		    if (returnVal != dynamic_cast<ETLeaf<char32_t>*>(leaf)->m_value)
 		    {
                 std::cout << "Hot Constants:  Warning: Data loss detected reloading"
-                    " constant value \"" << dynamic_cast<ETLeaf<char32_t>*>(leaf)->m_value <<
-                    "\".  Is your constant type wide enough for your value?" << std::endl;
+                    " constant value \"U'" << (char)dynamic_cast<ETLeaf<char32_t>*>(leaf)->m_value <<
+                    "'\" (value = " << (int_fast32_t)dynamic_cast<ETLeaf<char32_t>*>(leaf)->m_value <<
+                    ").  Is your constant type wide enough for your value?" << std::endl;
 		    }
 		    break;
 	    case literalType::lit_wchar:
@@ -180,8 +182,9 @@ T _castETLeaf(ETNode* leaf)
 		    if (returnVal != dynamic_cast<ETLeaf<wchar_t>*>(leaf)->m_value)
 		    {
                 std::cout << "Hot Constants:  Warning: Data loss detected reloading"
-                    " constant value \"" << dynamic_cast<ETLeaf<wchar_t>*>(leaf)->m_value <<
-                    "\".  Is your constant type wide enough for your value?" << std::endl;
+                    " constant value \"L'" << (char)dynamic_cast<ETLeaf<wchar_t>*>(leaf)->m_value <<
+                    "'\" (value = " << (long)dynamic_cast<ETLeaf<char16_t>*>(leaf)->m_value <<
+                    ").  Is your constant type wide enough for your value?" << std::endl;
 		    }
 		    break;
 	    default:
