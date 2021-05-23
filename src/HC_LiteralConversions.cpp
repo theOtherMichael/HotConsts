@@ -338,7 +338,7 @@ unsigned int _convertLiteralTo_uint(std::string& token, literalBase base)
     if (postLiteralPos < token.length())
         throw std::invalid_argument("Hot Constants:  The literal has an invalid suffix.");
     
-    return returnVal;
+    return (unsigned int)returnVal;
 }
 
 unsigned long _convertLiteralTo_ulong(std::string& token, literalBase base)
@@ -885,7 +885,7 @@ char32_t _convertLiteralTo_char32(std::string& token)
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_char32() was passed an invalid literal.");
                 if (converted > UINT_LEAST32_MAX)
                     throw std::out_of_range("Hot Constants:  Hex escape sequence out of range.");
-                return converted;
+                return (char32_t)converted;
             }
                 break;
             case 'u': // universal character name (4 digits)
@@ -913,7 +913,7 @@ char32_t _convertLiteralTo_char32(std::string& token)
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_char32() was passed an invalid literal.");
                 if (converted > 0777)
                     throw std::out_of_range("Hot Constants:  Octal escape sequence out of range.");
-                return converted;
+                return (char32_t)converted;
             }
                 break;
         }
@@ -1009,7 +1009,7 @@ wchar_t _convertLiteralTo_wchar(std::string& token)
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_wchar() was passed an invalid literal.");
                 if (converted > RANGEOFTYPE(wchar_t))
                     throw std::out_of_range("Hot Constants:  Hex escape sequence out of range.");
-                return converted;
+                return (wchar_t)converted;
             }
                 break;
             case 'u': // universal character name (4 digits)
@@ -1037,7 +1037,7 @@ wchar_t _convertLiteralTo_wchar(std::string& token)
                     throw std::invalid_argument("Hot Constants:  _convertLiteralTo_wchar() was passed an invalid literal.");
                 if (converted > 0777)
                     throw std::out_of_range("Hot Constants:  Octal escape sequence out of range.");
-                return converted;
+                return (wchar_t)converted;
             }
                 break;
         }
