@@ -1,6 +1,7 @@
-#include<HotConsts/HotConsts.h>
 #include "_tests.h"
 #include "LiteralSamples.h"
+#include <HotConsts/HotConsts.h>
+#include <iostream>
 
 bool identifyIntLiterals()
 {
@@ -10,9 +11,9 @@ bool identifyIntLiterals()
 	{
 		auto identityIt = intLiteralIdentities.begin();
 		for (auto literalIt = intLiterals.begin();
-			 literalIt != intLiterals.end(); 
+			 literalIt != intLiterals.end();
 			 ++literalIt)
-		{			
+		{
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
@@ -41,7 +42,7 @@ bool identifyLongLiterals()
 		for (auto literalIt = longLiterals.begin();
 			 literalIt != longLiterals.end();
 			 ++literalIt)
-		{			
+		{
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
@@ -68,9 +69,9 @@ bool identifyLongLongLiterals()
 	{
 		auto identityIt = longlongLiteralIdentities.begin();
 		for (auto literalIt = longlongLiterals.begin();
-			 literalIt != longlongLiterals.end(); 
+			 literalIt != longlongLiterals.end();
 			 ++literalIt)
-		{			
+		{
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
@@ -97,9 +98,9 @@ bool identifyUIntLiterals()
 	{
 		auto identityIt = uintLiteralIdentities.begin();
 		for (auto literalIt = uintLiterals.begin();
-			 literalIt != uintLiterals.end(); 
+			 literalIt != uintLiterals.end();
 			 ++literalIt)
-		{			
+		{
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
@@ -128,7 +129,7 @@ bool identifyULongLiterals()
 		for (auto literalIt = ulongLiterals.begin();
 			 literalIt != ulongLiterals.end();
 			 ++literalIt)
-		{			
+		{
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
@@ -155,9 +156,9 @@ bool identifyULongLongLiterals()
 	{
 		auto identityIt = ulonglongLiteralIdentities.begin();
 		for (auto literalIt = ulonglongLiterals.begin();
-			 literalIt != ulonglongLiterals.end(); 
+			 literalIt != ulonglongLiterals.end();
 			 ++literalIt)
-		{			
+		{
 			if (HotConsts::_identifyArithmeticLiteral(*literalIt) != *identityIt)
 			{
 				std::cout << RED << "The literal " << YELLOW << "\"" << *literalIt << "\"" << RED
@@ -204,6 +205,7 @@ bool identifyFloatLiterals()
 
 	return returnVal;
 }
+
 bool identifyDoubleLiterals()
 {
 	bool returnVal = true;
@@ -232,6 +234,7 @@ bool identifyDoubleLiterals()
 
 	return returnVal;
 }
+
 bool identifyLongDoubleLiterals()
 {
 	bool returnVal = true;
@@ -340,7 +343,7 @@ bool identifyUnaryOperators()
 {
 	bool returnVal = true;
 	std::string testToken;
-	
+
 	testToken = "+";
 	if (HotConsts::_identifyUnaryOperator(testToken) != HotConsts::unaryOperationType::unary_plus)
 	{

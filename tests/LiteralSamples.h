@@ -1,8 +1,9 @@
 #pragma once
 #include <HotConsts/HotConsts.h>
+#include <vector>
 
-/* 
-	Vectors containing examples of every kind of literal HotConsts needs to handle. 
+/*
+	Vectors containing examples of every kind of literal HotConsts needs to handle.
 	These are declared extern so that they can be initialized with initializer lists.
 */
 

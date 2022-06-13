@@ -1,5 +1,5 @@
 #pragma once
-#include "HC_PCH.h"
+#include <mutex>
 
 namespace HotConsts
 {

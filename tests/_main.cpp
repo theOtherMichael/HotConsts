@@ -1,18 +1,19 @@
+#include "_tests.h"
+#include <HotConsts/HotConsts.h>
+#include <iostream>
 #include <algorithm>
 #include <limits>
-#include <HotConsts/HotConsts.h>
-#include "_tests.h"
-
 
 /*
-	Hot Constants tests
+	HotConsts test runner
 	Quick'n'dirty test project for the Hot Constants library.
 */
 
-
 // How many characters of a function name to display before cutting it off.
-// Also used to justify the text.
+// Also used to right-justify the text.
 constexpr auto _maxTestNameLength = 40;
+
+static std::vector<std::string> failedTestNames;
 
 // Runs a test function and displays its name and status in the console.
 void RunTest(bool(*testfn)(), const char* testname)
@@ -26,9 +27,14 @@ void RunTest(bool(*testfn)(), const char* testname)
 
 	// Run the test and display its status
 	if (testfn())
+	{
 		std::cout << formattedName << GREEN << "Passed!" << WHITE << std::endl;
+	}
 	else
+	{
 		std::cout << RED << formattedName << "FAILED!" << WHITE << std::endl;
+		failedTestNames.push_back(testname);
+	}
 }
 
 // Helper macros for running tests
@@ -74,7 +80,7 @@ int main()
 	TEST(convertUIntLiterals);
 	TEST(convertULongLiterals);
 	TEST(convertULongLongLiterals);
-    TEST(conversionPromotesIntegers);
+	TEST(conversionPromotesIntegers);
 
 	TESTHEADER("Floating Point Literal Conversion");
 	TEST(convertDoubleLiterals);
@@ -83,10 +89,10 @@ int main()
 
 	TESTHEADER("Other Literal Conversion");
 	TEST(convertCharLiterals);
-    TEST(convertChar8Literals);
-    TEST(convertChar16Literals);
-    TEST(convertChar32Literals);
-    TEST(convertWCharLiterals);
+	TEST(convertChar8Literals);
+	TEST(convertChar16Literals);
+	TEST(convertChar32Literals);
+	TEST(convertWCharLiterals);
 	TEST(convertBoolLiterals);
 
 	TESTHEADER("Bad Integer Literal Handling");
@@ -112,111 +118,124 @@ int main()
 	TEST(handleBitShiftRightWithIntegralOperands);
 	TEST(handleModuloWithNonIntegralOperands);
 	TEST(handleBitShiftLeftWithNonIntegralOperands);
-    TEST(handleBitShiftRightWithNonIntegralOperands);
-    TEST(handleDivideByZero);
-    
-    TESTHEADER("Unary Operator Evaluation");
-    TEST(evalUnaryPlus);
-    TEST(evalUnaryMinus);
-    TEST(evalLogicalNot);
-    TEST(evalBinaryNot);
+	TEST(handleBitShiftRightWithNonIntegralOperands);
+	TEST(handleDivideByZero);
+	
+	TESTHEADER("Unary Operator Evaluation");
+	TEST(evalUnaryPlus);
+	TEST(evalUnaryMinus);
+	TEST(evalLogicalNot);
+	TEST(evalBinaryNot);
 
-    TESTHEADER("Comparison Operator Output Types");
-    TEST(ltOutputIsBoolType);
-    TEST(ltoreqOutputIsBoolType);
-    TEST(gtOutputIsBoolType);
-    TEST(gtoreqOutputIsBoolType);
-    TEST(eqOutputIsBoolType);
-    TEST(neqOutputIsBoolType);
+	TESTHEADER("Comparison Operator Output Types");
+	TEST(ltOutputIsBoolType);
+	TEST(ltoreqOutputIsBoolType);
+	TEST(gtOutputIsBoolType);
+	TEST(gtoreqOutputIsBoolType);
+	TEST(eqOutputIsBoolType);
+	TEST(neqOutputIsBoolType);
 
-    TESTHEADER("Logical Operator Output Types");
-    TEST(logicalANDOutputIsBoolType);
-    TEST(logicalOROutputIsBoolType);
+	TESTHEADER("Logical Operator Output Types");
+	TEST(logicalANDOutputIsBoolType);
+	TEST(logicalOROutputIsBoolType);
 
 	TESTHEADER("Unary Operator Output Types");
 	TEST(logicalNOTOutputIsBoolType);
-    
-    TESTHEADER("Ungrouped Expression Evaluation");
-    TEST(simpleUnaryExpression);
-    TEST(complexUnaryExpression);
-    TEST(simpleBinaryExpression);
-    TEST(simpleBinaryExprWithUnaryOperator);
-    TEST(simpleBinaryExprWithComplexUnaryOperator);
-    TEST(chainBinaryExpr_EqualPrecedence);
-    TEST(chainBinaryExpr_DecreasingPrecedence);
-    TEST(chainBinaryExpr_IncreasingPrecedence);
-    TEST(chainBinaryExpr_EqPrecedenceWithUnaryOps);
-    TEST(chainBinaryExpr_DecPrecedenceWithUnaryOps);
-    TEST(chainBinaryExpr_IncPrecedenceWithUnaryOps);
-    TEST(chainBinaryExpr_EqPrWithComplexUnaryOps);
-    TEST(chainBinaryExpr_DecPrWithComplexUnaryOps);
-    TEST(chainBinaryExpr_IncPrWithComplexUnaryOps);
-    TEST(spaceCharacterLiterals);
+	
+	TESTHEADER("Ungrouped Expression Evaluation");
+	TEST(simpleUnaryExpression);
+	TEST(complexUnaryExpression);
+	TEST(simpleBinaryExpression);
+	TEST(simpleBinaryExprWithUnaryOperator);
+	TEST(simpleBinaryExprWithComplexUnaryOperator);
+	TEST(chainBinaryExpr_EqualPrecedence);
+	TEST(chainBinaryExpr_DecreasingPrecedence);
+	TEST(chainBinaryExpr_IncreasingPrecedence);
+	TEST(chainBinaryExpr_EqPrecedenceWithUnaryOps);
+	TEST(chainBinaryExpr_DecPrecedenceWithUnaryOps);
+	TEST(chainBinaryExpr_IncPrecedenceWithUnaryOps);
+	TEST(chainBinaryExpr_EqPrWithComplexUnaryOps);
+	TEST(chainBinaryExpr_DecPrWithComplexUnaryOps);
+	TEST(chainBinaryExpr_IncPrWithComplexUnaryOps);
+	// TEST(spaceCharacterLiterals);
 
-    TESTHEADER("Grouped Expression Evaluation");
-    TEST(trivialParentheses);
-    TEST(parenthesesWithUnaryOperator);
-    TEST(parenthesesWithComplexUnaryOperator);
-    TEST(parenthesesTakePrecedence);
-    TEST(parenthesesTakePrecedenceWithUnaryOp);
-    TEST(parenthesesTakePrecWithComplexUnaryOp);
-    TEST(nestedParentheses);
-    TEST(nestedParenthesesWithUnaryOperators);
-    TEST(nestedParenthesesWithComplexUnaryOps);
-    TEST(separateParenthesesGroups);
-    TEST(separateParenthesesGroupsWithUnaryOps);
-    TEST(separateParenthesesGroupsWithComplexUnaryOps);
+	TESTHEADER("Grouped Expression Evaluation");
+	TEST(trivialParentheses);
+	TEST(parenthesesWithUnaryOperator);
+	TEST(parenthesesWithComplexUnaryOperator);
+	TEST(parenthesesTakePrecedence);
+	TEST(parenthesesTakePrecedenceWithUnaryOp);
+	TEST(parenthesesTakePrecWithComplexUnaryOp);
+	TEST(nestedParentheses);
+	TEST(nestedParenthesesWithUnaryOperators);
+	TEST(nestedParenthesesWithComplexUnaryOps);
+	TEST(separateParenthesesGroups);
+	TEST(separateParenthesesGroupsWithUnaryOps);
+	TEST(separateParenthesesGroupsWithComplexUnaryOps);
 
-    TESTHEADER("Ultra Expression Evaluation");
-    TEST(ultraExpressionEval);
+	TESTHEADER("Ultra Expression Evaluation");
+	TEST(ultraExpressionEval);
 
-    TESTHEADER("Bad Expression Handling");
-    TEST(unpairedOpenParentheses);
-    TEST(unpairedCloseParentheses);
-    TEST(unexpectedOpenParentheses);
-    TEST(unexpectedCloseParentheses);
-    TEST(unexpectedNonLiteral);
-    TEST(unexpectedNonOperator);
-    TEST(missingFinalLiteral);
-    TEST(narrowingFinalConversion);
-    
-    TESTHEADER("Memory leaks");
-    TEST(noMemoryLeaks);
-    
-    // RELOAD TESTS
+	TESTHEADER("Bad Expression Handling");
+	TEST(unpairedOpenParentheses);
+	TEST(unpairedCloseParentheses);
+	TEST(unexpectedOpenParentheses);
+	TEST(unexpectedCloseParentheses);
+	TEST(unexpectedNonLiteral);
+	TEST(unexpectedNonOperator);
+	TEST(missingFinalLiteral);
+	TEST(narrowingFinalConversion);
+	
+	TESTHEADER("Memory leaks");
+	TEST(noMemoryLeaks);
+	
+	// RELOAD TESTS
 
-    TESTHEADER("Source code comment parsing");
-    TEST(handleSingleLineComments);
-    TEST(handleSingleLineCommentsInStrings);
-    TEST(handleMultiLineComments);
-    TEST(handleMultiLineCommentsInStrings);
+	TESTHEADER("Source code comment parsing");
+	TEST(handleSingleLineComments);
+	TEST(handleSingleLineCommentsInStrings);
+	TEST(handleMultiLineComments);
+	TEST(handleMultiLineCommentsInStrings);
 
-    TESTHEADER("Source code reload");
-    TEST(reloadSimpleHC);
-    TEST(reloadSingleHCWithTypeModifier);
-    TEST(reloadSingleHCWithLineBreaks);
-    TEST(reloadSingleHCWithTypeModifierAndLineBreaks);
-    TEST(reloadMultipleHCs);
-    TEST(reloadMutipleHCsSingleLine);
-    TEST(reloadIgnoresMacroInStrings);
-    TEST(reloadSkipsSymbolsContainingHC);
+	TESTHEADER("Source code reload");
+	TEST(reloadSimpleHC);
+	TEST(reloadSingleHCWithTypeModifier);
+	TEST(reloadSingleHCWithLineBreaks);
+	TEST(reloadSingleHCWithTypeModifierAndLineBreaks);
+	TEST(reloadMultipleHCs);
+	TEST(reloadMutipleHCsSingleLine);
+	TEST(reloadIgnoresMacroInStrings);
+	TEST(reloadSkipsSymbolsContainingHC);
 
-    TESTHEADER("Bad source code reload");
-    TEST(reloadCatchesFileOpenFailure);
-    TEST(reloadHandlesBadParams);
-    TEST(reloadHandlesBadAssignment);
-    TEST(reloadHandlesNewParams);
-    TEST(reloadHandlesRedefinitions);
-    TEST(reloadHandlesEOF_awaitingLParentheses);
-    TEST(reloadHandlesEOF_awaitingParam1);
-    TEST(reloadHandlesEOF_awaitingComma);
-    TEST(reloadHandlesEOF_awaitingParam2);
-    TEST(reloadHandlesEOF_awaitingRParentheses);
-    TEST(reloadHandlesEOF_awaitingAssignmentOperator);
-    TEST(reloadHandlesEOF_awaitingSemicolon);
+	TESTHEADER("Bad source code reload");
+	TEST(reloadCatchesFileOpenFailure);
+	TEST(reloadHandlesBadParams);
+	TEST(reloadHandlesBadAssignment);
+	TEST(reloadHandlesNewParams);
+	TEST(reloadHandlesRedefinitions);
+	TEST(reloadHandlesEOF_awaitingLParentheses);
+	TEST(reloadHandlesEOF_awaitingParam1);
+	TEST(reloadHandlesEOF_awaitingComma);
+	TEST(reloadHandlesEOF_awaitingParam2);
+	TEST(reloadHandlesEOF_awaitingRParentheses);
+	TEST(reloadHandlesEOF_awaitingAssignmentOperator);
+	TEST(reloadHandlesEOF_awaitingSemicolon);
 
-    TESTHEADER("File watch");
-    TEST(fileChangeTriggersReload);
+	TESTHEADER("File watch");
+	TEST(fileChangeTriggersReload);
 
-	return 0;
+	if (failedTestNames.size() > 0)
+	{
+		std::cout << std::endl << RED << failedTestNames.size() << " tests failed!" << WHITE << std::endl;
+		for (const std::string& failedTestName : failedTestNames)
+		{
+			std::cout << YELLOW << "* " << failedTestName << WHITE << std::endl;
+		}
+		return EXIT_FAILURE;
+	}
+	else
+	{
+		std::cout << std::endl << GREEN << "All tests passed!" << WHITE << std::endl;
+		return EXIT_SUCCESS;
+	}
 }

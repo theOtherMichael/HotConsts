@@ -1,10 +1,10 @@
 #pragma once
 
 // Output text color switches
-constexpr auto WHITE = "\x1b[0m";
-constexpr auto RED = "\x1b[91m";
-constexpr auto GREEN = "\x1b[92m";
-constexpr auto YELLOW = "\x1b[93m";
+constexpr const char* WHITE = "\x1b[0m";
+constexpr const char* RED = "\x1b[91m";
+constexpr const char* GREEN = "\x1b[92m";
+constexpr const char* YELLOW = "\x1b[93m";
 
 // TOKENIZATION TESTS
 

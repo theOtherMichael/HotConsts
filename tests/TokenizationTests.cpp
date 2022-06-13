@@ -1,10 +1,5 @@
-#include <HotConsts/HotConsts.h>
 #include "_tests.h"
-
-/*
-	Tests insertion of spaces between tokens.
-*/
-
+#include <HotConsts/HotConsts.h>
 
 std::string testStrIn, testStrOut;
 

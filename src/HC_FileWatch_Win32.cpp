@@ -1,7 +1,13 @@
-#include "HC_PCH.h"
 #ifdef _WIN32
 
-#include "HotConsts.h"
+#include "HotConsts/HotConsts.h"
+#include <algorithm>
+#include <shared_mutex>
+
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <Windows.h>
 
 std::vector<std::wstring>& _watchedDirPaths()
 {
@@ -9,36 +15,40 @@ std::vector<std::wstring>& _watchedDirPaths()
 		= new std::vector<std::wstring>();
 	return *instance;
 };
+
 std::vector<std::vector<std::string>>& _watchedFilepathsPerDir()
 {
 	static std::vector<std::vector<std::string>>* instance
 		= new std::vector<std::vector<std::string>>();
 	return *instance;
 };
+
 std::vector<std::vector<std::wstring>>& _watchedFilenamesPerDir()
 {
 	static std::vector<std::vector<std::wstring>>* instance
 		= new std::vector<std::vector<std::wstring>>();
 	return *instance;
 };
+
 std::vector<HANDLE>& _openDirHandles()
 {
 	static std::vector<HANDLE>* instance
 		= new std::vector<HANDLE>();
 	return *instance;
 };
+
 std::vector<std::thread>& _watchThreads()
 {
 	static std::vector<std::thread>* instance
 		= new std::vector<std::thread>();
 	return *instance;
 };
+
 std::shared_mutex& _watchRegistrationMutex() // allows safe registration of new threads.
 {
 	static std::shared_mutex* instance = new std::shared_mutex();
 	return *instance;
 };
-
 
 // TODO: Reevaluate the portability of this?
 #ifdef UNICODE
@@ -48,7 +58,6 @@ std::shared_mutex& _watchRegistrationMutex() // allows safe registration of new 
 #define tcout std::cout
 #define tstring std::string
 #endif
-
 
 void printLastError(DWORD errorcode)
 {
@@ -66,7 +75,6 @@ void printLastError(DWORD errorcode)
 
 	tcout << L"Error " << errorcode << L": " << tstring((LPTSTR)lpMsgBuf) << std::endl;
 }
-
 
 //std::wstring changeActionToWString(DWORD actionID)
 //{
@@ -89,7 +97,6 @@ void printLastError(DWORD errorcode)
 //		break;
 //	}
 //}
-
 
 void WaitForDirChange_Win32(size_t index)
 {
@@ -153,15 +160,12 @@ void WaitForDirChange_Win32(size_t index)
 	}
 
 	// Report if the loop wasn't terminated on purpose.
-
 	DWORD errorcode = GetLastError();
 	if (errorcode != ERROR_OPERATION_ABORTED)
 	{
 		printLastError(errorcode);
 	}
 }
-
-
 
 namespace HotConsts
 {
@@ -180,19 +184,13 @@ bool HC_FileWatchRegistry::addWatch(std::string filepath)
 				&filepath_cstr, filepath_len,
 				&outState);				//unused
 
-	std::wstring filepath_wstr(filepath_wcstr.data()); // Ta-da!
+	std::wstring filepath_wstr(filepath_wcstr.data());
 
+	// Replace slashes with backslashes (needed for Clang)
+	std::replace(filepath_wstr.begin(), filepath_wstr.end(), '/', '\\');
 
 	// Split the filepath into filename and dirpath strings.
 	size_t finalSlashPos = filepath_wstr.rfind(L"\\");
-
-	// The following test, which ensures the filepath doesn't end in a slash, is now redundant.
-	//if (finalSlashPos + 1 >= filepath_wstr.length())
-	//{
-	//	std::wcout << L"Hot Constants:  Error: HC_FileWatchRegistry::addWatch() "
-	//		"was passed invalid filepath \"" << filepath_wstr << L"\"." << std::endl;
-	//	return false;
-	//}
 	
 	auto filename = filepath_wstr.substr(finalSlashPos + 1);
 	auto dirpath = filepath_wstr.substr(0, finalSlashPos);
@@ -264,7 +262,6 @@ bool HC_FileWatchRegistry::addWatch(std::string filepath)
 	return false;
 }
 
-
 HC_FileWatchRegistry::~HC_FileWatchRegistry()
 {
 	// Cancel waits
@@ -288,7 +285,6 @@ HC_FileWatchRegistry::~HC_FileWatchRegistry()
 	}
 }
 
-
 HC_FileWatchRegistry& _getWatchRegistry()
 {
 	// As long as no object references HC_FileWatchRegistry in its destructor, this
@@ -298,8 +294,6 @@ HC_FileWatchRegistry& _getWatchRegistry()
 	return instance;
 }
 
-
 }
-
 
 #endif // _WIN32
