@@ -2,6 +2,7 @@
 #include <HotConsts/HotConsts.h>
 #include <iostream>
 #include <fstream>
+#include <thread>
 
 // Use backslashes in paths on Windows becaus'a fuckin' Microsoft
 #ifdef _WIN32

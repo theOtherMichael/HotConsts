@@ -1,6 +1,7 @@
 #if defined(__APPLE__) && defined(__MACH__)
 
 #include "HotConsts/HotConsts.h"
+#include <thread>
 #include <CoreServices/CoreServices.h>
 
 // The length in seconds after a save event before the FSEvent callback is invoked.
